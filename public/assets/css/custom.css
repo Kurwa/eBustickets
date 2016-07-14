@@ -1,0 +1,14 @@
+/* -----------------------------------------
+   Custom.css - put your own changes here 
+----------------------------------------- */
+.required{
+    color: red !important;
+}
+.caption{
+    font-family: DejaVu Sans, 'trebuchet ms', verdana, sans-serif;
+    padding: 20px;
+}
+.img-thumbnail{
+    width: 150px !important;
+    height: 150px !important;
+}
