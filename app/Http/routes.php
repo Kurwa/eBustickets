@@ -12,5 +12,5 @@
 */
 
 Route::get('/', function () {
-    return view('layouts.main');
+    return view('auth.login');
 });
