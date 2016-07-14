@@ -10,7 +10,7 @@
             <!-- / .sidebar-panel -->
             <div class="user-info clearfix">
                 <img src="{{ asset('assets/img/person.gif') }}" alt="avatar">
-                <span class="name">Admin</span>
+                <span class="name">{{ ucfirst(Sentinel::getUser()->username) }}</span>
                 <div class="btn-group">
                     <button type="button" class="btn btn-default btn-xs"><i class="l-basic-gear"></i>
                     </button>
@@ -34,16 +34,65 @@
                     <li><a href="{{ url('/') }}">
                             <i class="fa fa-home"></i><span class="txt">Dashboard</span></a>
                     </li>
-                    <li class="disabled">
-                        <a href="#"><i class="fa  fa-group"></i> <span class="txt">Customers</span></a>
-                        <ul class="sub">
+
+                    {{--@if(Sentinel::getUser()->username)--}}
+                        @if(Sentinel::getUser()->company_id)
+                        <li class="disabled">
+                            <a href="#"><i class="fa  fa-group"></i> <span class="txt">Routes</span></a>
+                            <ul class="sub">
+                                {{--<li><a href="email-inbox.html"><span class="txt">Inbox</span></a>--}}
+                                {{--</li>--}}
+                                {{--<li><a href="email-read.html"><span class="txt">Read email</span></a>--}}
+                                {{--</li>--}}
+                                {{--<li><a href="email-write.html"><span class="txt">Write email</span></a>--}}
+                                {{--</li>--}}
+                            </ul>
+                        </li>
+                        <li class="disabled">
+                            <a href="#"><i class="fa  fa-group"></i> <span class="txt">Bus Mng</span></a>
+                            <ul class="sub">
+                                {{--<li><a href="email-inbox.html"><span class="txt">Inbox</span></a>--}}
+                                {{--</li>--}}
+                                {{--<li><a href="email-read.html"><span class="txt">Read email</span></a>--}}
+                                {{--</li>--}}
+                                {{--<li><a href="email-write.html"><span class="txt">Write email</span></a>--}}
+                                {{--</li>--}}
+                            </ul>
+                        </li>
+                        <li class="disabled">
+                            <a href="#"><i class="fa  fa-group"></i> <span class="txt">Tickets</span></a>
+                            <ul class="sub">
+                                {{--<li><a href="email-inbox.html"><span class="txt">Inbox</span></a>--}}
+                                {{--</li>--}}
+                                {{--<li><a href="email-read.html"><span class="txt">Read email</span></a>--}}
+                                {{--</li>--}}
+                                {{--<li><a href="email-write.html"><span class="txt">Write email</span></a>--}}
+                                {{--</li>--}}
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="{{ url('agents') }}"><i class="fa  fa-group"></i> <span class="txt">Passengers</span></a>
+                            {{--<ul class="sub">--}}
                             {{--<li><a href="email-inbox.html"><span class="txt">Inbox</span></a>--}}
                             {{--</li>--}}
                             {{--<li><a href="email-read.html"><span class="txt">Read email</span></a>--}}
                             {{--</li>--}}
                             {{--<li><a href="email-write.html"><span class="txt">Write email</span></a>--}}
                             {{--</li>--}}
-                        </ul>
+                            {{--</ul>--}}
+                        </li>
+                    @endif
+
+                    <li class="">
+                        <a href="{{ url('customers-lists') }}"><i class="fa  fa-group"></i> <span class="txt">Customers</span></a>
+                        {{--<ul class="sub">--}}
+                            {{--<li><a href="email-inbox.html"><span class="txt">Inbox</span></a>--}}
+                            {{--</li>--}}
+                            {{--<li><a href="email-read.html"><span class="txt">Read email</span></a>--}}
+                            {{--</li>--}}
+                            {{--<li><a href="email-write.html"><span class="txt">Write email</span></a>--}}
+                            {{--</li>--}}
+                        {{--</ul>--}}
                     </li>
                     <li class="">
                         <a href="{{ url('agents') }}"><i class="fa  fa-group"></i> <span class="txt">Agents</span></a>
@@ -57,17 +106,6 @@
                         {{--</ul>--}}
                     </li>
                     <li class="disabled">
-                        <a href="#"><i class="fa fa-user"></i> <span class="txt">User Manage</span></a>
-                        <ul class="sub">
-                            {{--<li><a href="email-inbox.html"><span class="txt">Inbox</span></a>--}}
-                            {{--</li>--}}
-                            {{--<li><a href="email-read.html"><span class="txt">Read email</span></a>--}}
-                            {{--</li>--}}
-                            {{--<li><a href="email-write.html"><span class="txt">Write email</span></a>--}}
-                            {{--</li>--}}
-                        </ul>
-                    </li>
-                    <li class="disabled">
                         <a href="#"><i class=" l-ecommerce-graph2"></i><span class="txt">Reports Center</span></a>
                         <ul class="sub">
                             {{--<li><a href="maps-google.html"><span class="txt">Google maps</span></a>--}}
@@ -76,22 +114,23 @@
                             {{--</li>--}}
                         </ul>
                     </li>
-                    <li class="disabled">
-                        <a href="#"><i class="fa fa-wrench"></i><span class="txt">Administration</span></a>
-                        <ul class="sub">
+                    {{--<li class="disabled">--}}
+                        {{--<a href="#"><i class="fa fa-wrench"></i><span class="txt">Administration</span></a>--}}
+                        {{--<ul class="sub">--}}
                             {{--<li><a href="login.html"><span class="txt">Login</span></a>--}}
                             {{--</li>--}}
                             {{--<li><a href="lock-screen.html"><span class="txt">Lock screen</span></a>--}}
                             {{--</li>--}}
-                        </ul>
-                    </li>
-                    <li class="disabled">
+                        {{--</ul>--}}
+                    {{--</li>--}}
+                    <li class="">
                         <a href="#"><i class="fa fa-cogs"></i><span class="txt">Configurations</span></a>
                         <ul class="sub">
-                            {{--<li><a href="login.html"><span class="txt">Login</span></a>--}}
-                            {{--</li>--}}
-                            {{--<li><a href="lock-screen.html"><span class="txt">Lock screen</span></a>--}}
-                            {{--</li>--}}
+                            <li><a href="{{ url('system-configuration') }}"><span class="txt">System Config</span></a>
+                            </li>
+                            <li><a href="{{ url('configurations/users') }}"><span class="txt">Users</span></a>
+                            <li><a href="{{ url('configurations/roles') }}"><span class="txt">Roles</span></a>
+                            </li>
                         </ul>
                     </li>
                 </ul>

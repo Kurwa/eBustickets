@@ -210,6 +210,10 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        /*
+        *  Additional
+        * */
+        'Input' => Illuminate\Support\Facades\Input::class,
         /*  Form Aliases with Sentinel */
 
         'Form' => Collective\Html\FormFacade::class,
