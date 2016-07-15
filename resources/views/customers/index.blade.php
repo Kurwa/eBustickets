@@ -41,6 +41,26 @@
                 </tr>
                 </thead>
                 <tbody>
+                {{--*/ $i = 0/*--}}
+                @foreach($companies as $company)
+                    {{--*/ $i++/*--}}
+                    <tr>
+                        <td>{{ $i }}</td>
+                        <td><a href="#">{{ $company->name }}</a> </td>
+                        <td>{{ $company->address }}</td>
+                        <td>{{ $company->telephone }}</td>
+                        <td>{{ $company->email }}</td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <div class="btn-group">
+                                <button class="btn btn-default btn-xs"><i class="fa fa-eye"></i> view</button>
+                                <button class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit</button>
+                                <button class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Edit</button>
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>

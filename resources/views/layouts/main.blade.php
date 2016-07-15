@@ -127,7 +127,28 @@
                         <li class="active">@yield('last')</li>
                     </ol>
                 </div>
-    @yield('contents')
+                @if(Session::has('error'))
+                    <div class="alert alert-danger">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        {{ Session::get('error') }}
+                    </div>
+                @elseif(Session::has('success'))
+                    <div class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        {{ Session::get('success') }}
+                    </div>
+                @endif
+                @if (count($errors) > 0)
+                    <div class="alert alert-danger">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        {{--<ul>--}}
+                            @foreach ($errors->all() as $error)
+                                {{ $error }}
+                            @endforeach
+                        {{--</ul>--}}
+                    </div>
+                @endif
+                @yield('contents')
                 </div>
             </div>
     </div>

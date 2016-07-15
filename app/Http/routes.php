@@ -55,9 +55,25 @@ Route::get('reactivate', function()
     return Redirect::to('login');
 })->where('id', '\d+');
 
-/**
- *  CUSTOMERS MODULE
- * */
+             /**
+             *  CUSTOMERS MODULE
+             * */
+
 Route::group(['middleware' => 'auth'], function () {
     Route::get('customers-lists','CustomerController@index');
+});
+            /**
+             *  Configuration MODULE
+             * */
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('system-configuration','ConfigurationController@system_index');
+});
+
+Route::group(['middleware' => 'auth','prefix'=>'configurations'], function () {
+
+    Route::get('users','ConfigurationController@index');
+    Route::post('users','ConfigurationController@store');
+
+    Route::get('roles','ConfigurationController@role_index');
+    Route::post('roles','ConfigurationController@role_post');
 });
