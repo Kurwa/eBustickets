@@ -10,9 +10,11 @@ class Companies extends Model
 
     protected  $fillable = [
         'name',
+        'slug',
         'address',
         'email',
         'telephone',
-        'website',
+        'ownername',
+        'ownerphone',
     ];
 }

@@ -12,4 +12,13 @@ class RoleUser extends Model
      * @var string
      */
     protected $table = 'role_users';
+
+    public function user()
+    {
+        return $this->belongsTo('App\Model\User');
+    }
+    public function role()
+    {
+        return $this->belongsTo('App\Model\Role');
+    }
 }

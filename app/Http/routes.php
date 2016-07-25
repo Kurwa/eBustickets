@@ -61,6 +61,7 @@ Route::get('reactivate', function()
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('customers-lists','CustomerController@index');
+     Route::post('customers-lists','CustomerController@store');
 });
             /**
              *  Configuration MODULE
@@ -77,3 +78,78 @@ Route::group(['middleware' => 'auth','prefix'=>'configurations'], function () {
     Route::get('roles','ConfigurationController@role_index');
     Route::post('roles','ConfigurationController@role_post');
 });
+
+        /**
+         *  ROUTES MODULE
+         * */
+
+Route::group(['middleware' => 'auth','prefix'=>'routes'], function () {
+    Route::get('routes-lists','RouteController@index');
+    Route::post('routes-lists','RouteController@store');
+});
+
+
+        /**
+         *  BUSES MODULE
+         * */
+
+Route::group(['middleware' => 'auth','prefix'=>'buses'], function () {
+    /*
+     *  Lists of Buses
+     * */
+    Route::get('buses-lists','BusesController@index');
+    Route::post('buses-lists','BusesController@store');
+    Route::get('{id}/bus-profile','BusesController@profile');
+
+    Route::get('{id}/bus-documents','BusesController@documents');
+    Route::post('{id}/bus-documents','BusesController@documents_post');
+    Route::get('doc_preview','BusesController@doc_preview');
+
+    Route::get('{id}/bus-tickets','BusesController@tickets');
+    Route::get('{id}/bus-inspections','BusesController@inspections');
+    Route::get('{id}/bus-maintenance','BusesController@maintenance');
+    Route::get('{id}/bus-insurances','BusesController@insurances');
+
+    /*INSPECTIONS*/
+    Route::get('buses-inspections','InspectionsController@index');
+    Route::post('buses-inspections','InspectionsController@store');
+    /*MAINTENANCE*/
+    Route::get('buses-maintenance','MaintenanceController@index');
+
+    /*INSURANCE*/
+    Route::get('buses-insurances','InsuranceController@index');
+    Route::post('buses-insurances','InsuranceController@store');
+
+});
+Route::group(['middleware' => 'auth','prefix'=>'tickets'], function () {
+    /*
+     *  Lists of Tickets & Bookings
+     * */
+    Route::get('/','TicketsController@index');
+    Route::get('bookings','TicketsController@booking');
+    Route::post('bookings','TicketsController@booking_post');
+
+    Route::get('templates','TicketsController@templates');
+    Route::post('templates','TicketsController@store');
+
+
+
+    /**
+     *  AJAX FUNCTIONS
+     */
+    Route::get('routes-taking','TicketsController@routes_taking');
+    Route::get('routes-location','TicketsController@routes_location');
+    Route::get('template_view','TicketsController@template_view');
+
+});
+Route::get('booking/{slug}','WebsiteController@index');
+
+
+
+
+
+
+//Route::get('register','ConfigurationController@registersuper');
+
+
+

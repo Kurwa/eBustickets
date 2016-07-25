@@ -34,40 +34,26 @@
                     <li><a href="{{ url('/') }}">
                             <i class="fa fa-home"></i><span class="txt">Dashboard</span></a>
                     </li>
+                        {{--@if(Sentinel::getUser()->id)--}}
+                        <li class="">
+                            <a href="{{ url('routes/routes-lists') }}"><i class="fa   fa-code-fork"></i><span class="txt">Manage Routes</span></a>
+                        </li>
+                        <li class="">
+                            <a href="#"><i class="fa  fa-bus"></i><span class="txt"> Manage Buses</span></a>
+                            <ul class="sub">
+                                <li><a href="{{ url('buses/buses-lists') }}"><span class="txt">Buses Lists</span></a></li>
+                                <li><a href="{{ url('buses/buses-inspections') }}"><span class="txt">Inspections</span></a></li>
+                                <li><a href="{{ url('buses/buses-maintenance') }}"><span class="txt">Maintenance</span></a></li>
+                                <li><a href="{{ url('buses/buses-insurances') }}"><span class="txt">Insurance</span></a></li>
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="#"><i class="fa  fa-ticket"></i> <span class="txt">Tickets</span></a>
+                            <ul class="sub">
+                                <li><a href="{{ url('tickets') }}"><span class="txt">Tickets</span></a></li>
+                                <li><a href="{{ url('tickets/bookings') }}"><span class="txt">Booking List</span></a></li>
+                                <li><a href="{{ url('tickets/templates') }}"><span class="txt">Ticket Template</span></a></li>
 
-                    {{--@if(Sentinel::getUser()->username)--}}
-                        @if(Sentinel::getUser()->company_id)
-                        <li class="disabled">
-                            <a href="#"><i class="fa  fa-group"></i> <span class="txt">Routes</span></a>
-                            <ul class="sub">
-                                {{--<li><a href="email-inbox.html"><span class="txt">Inbox</span></a>--}}
-                                {{--</li>--}}
-                                {{--<li><a href="email-read.html"><span class="txt">Read email</span></a>--}}
-                                {{--</li>--}}
-                                {{--<li><a href="email-write.html"><span class="txt">Write email</span></a>--}}
-                                {{--</li>--}}
-                            </ul>
-                        </li>
-                        <li class="disabled">
-                            <a href="#"><i class="fa  fa-group"></i> <span class="txt">Bus Mng</span></a>
-                            <ul class="sub">
-                                {{--<li><a href="email-inbox.html"><span class="txt">Inbox</span></a>--}}
-                                {{--</li>--}}
-                                {{--<li><a href="email-read.html"><span class="txt">Read email</span></a>--}}
-                                {{--</li>--}}
-                                {{--<li><a href="email-write.html"><span class="txt">Write email</span></a>--}}
-                                {{--</li>--}}
-                            </ul>
-                        </li>
-                        <li class="disabled">
-                            <a href="#"><i class="fa  fa-group"></i> <span class="txt">Tickets</span></a>
-                            <ul class="sub">
-                                {{--<li><a href="email-inbox.html"><span class="txt">Inbox</span></a>--}}
-                                {{--</li>--}}
-                                {{--<li><a href="email-read.html"><span class="txt">Read email</span></a>--}}
-                                {{--</li>--}}
-                                {{--<li><a href="email-write.html"><span class="txt">Write email</span></a>--}}
-                                {{--</li>--}}
                             </ul>
                         </li>
                         <li class="">
@@ -81,7 +67,7 @@
                             {{--</li>--}}
                             {{--</ul>--}}
                         </li>
-                    @endif
+                    {{--@endif--}}
 
                     <li class="">
                         <a href="{{ url('customers-lists') }}"><i class="fa  fa-group"></i> <span class="txt">Customers</span></a>

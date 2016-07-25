@@ -33,7 +33,7 @@ Home
             <div id="dash_0" class="panel panel-default"><!-- Start .panel -->
                 <div class="panel-body">
                     <a class="lead-stats" href="#">
-                        <span class="stats-number">$56</span>
+                        <span class="stats-number today">{{ number_format($today) }}</span>
                         <span class="stats-icon"><i class="fa fa-money fa-3x color-green"></i></span>
                         <h5>Today earnings</h5>
                     </a>
@@ -44,7 +44,7 @@ Home
             <div id="dash_1" class="panel panel-default"><!-- Start .panel -->
                 <div class="panel-body">
                     <a class="lead-stats" href="#">
-                        <span class="stats-number" data-from="0" data-to="317">317</span>
+                        <span class="stats-number users">{{ number_format($users) }}</span>
                         <span class="stats-icon"><i class="fa fa-group fa-3x color-yellow-dark"></i></span>
                         <h5>Users</h5>
                     </a>
@@ -55,7 +55,7 @@ Home
             <div id="dash_2" class="panel panel-default"><!-- Start .panel -->
                 <div class="panel-body">
                     <a class="lead-stats" href="#">
-                        <span class="stats-number" data-from="0" data-to="17">17</span>
+                        <span class="stats-number agents">{{ number_format($agents) }}</span>
                         <span class="stats-icon"><i class="fa fa-bank fa-3x color-blue"></i></span>
                         <h5>Agents</h5>
                     </a>
@@ -66,8 +66,8 @@ Home
             <div id="dash_3" class="panel panel-default"><!-- Start .panel -->
                 <div class="panel-body">
                     <a class="lead-stats" href="#">
-                        <span class="stats-number" data-from="0" data-to="48">48</span>
-                        <span class="stats-icon"><i class="fa fa-user fa-3x color-red"></i></span>
+                        <span class="stats-number buses">{{ number_format($buses) }}</span>
+                        <span class="stats-icon"><i class="fa fa-bus fa-3x"></i></span>
                         <h5>Customers</h5>
                     </a>
                 </div>

@@ -12,12 +12,6 @@
     Customer Lists
 @stop
 @section('contents')
-    <style type="text/css">
-        .panel{
-            /*min-height: 400px !important;*/
-            overflow: visible !important;
-        }
-    </style>
     <div id="dyn_7" class="panel panel-lime plain">
         <div class="panel-heading">
             <h4 class="panel-title"><i class="fa fa-search"></i>  View Customers List</h4>
@@ -75,28 +69,34 @@
                     </button>
                     <h4 class="modal-title" id="myModalLabel">Customers</h4>
                 </div>
-                {!! Form::open(array('class'=>'form-horizontal')) !!}
+                {!! Form::open(array('class'=>'form-horizontal','autocomplete'=>'OFF')) !!}
                 <div class="modal-body" id="">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="col-lg-3 col-md-4 control-label" for="">Company Name</label>
                             <div class="col-lg-9 col-md-8">
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" name="name" placeholder="Company Name">
                             </div>
                         </div>
                     {{--</div>--}}
+                        <div class="form-group">
+                            <label class="col-lg-3 col-md-4 control-label" for="">Slug</label>
+                            <div class="col-lg-9 col-md-8">
+                                <input type="text" class="form-control" placeholder="Slug" name="slug">
+                            </div>
+                        </div>
                     <!-- End .form-group  -->
                     <div class="form-group">
                         <label class="col-lg-3 col-md-4 control-label" for="">Address</label>
                         <div class="col-lg-9 col-md-8">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" placeholder="Address" name="address">
                         </div>
                     </div>
                     <!-- End .form-group  -->
                     <div class="form-group">
                         <label class="col-lg-3 col-md-4 control-label" for="">Telephone</label>
                         <div class="col-lg-9 col-md-8">
-                            <input type="text" class="form-control" value="" name="stock_number" required>
+                            <input type="text" class="form-control" value="" name="telephone"  required placeholder="Telephone">
                         </div>
                     </div>
                     <!-- End .form-group  -->
@@ -105,21 +105,21 @@
                     <div class="form-group">
                         <label class="col-lg-3 col-md-4 control-label" for="">Email</label>
                         <div class="col-lg-9 col-md-8">
-                        <input type="text" class="form-control">
+                        <input type="email" class="form-control" name="email" placeholder="Email">
                         </div>
                     </div>
                     <!-- End .form-group  -->
                     <div class="form-group">
                         <label class="col-lg-3 col-md-4 control-label" for="">Owner's Name</label>
                         <div class="col-lg-9 col-md-8">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" placeholder="Owner's Name" name="ownername">
                         </div>
                     </div>
                     <!-- End .form-group  -->
                     <div class="form-group">
                         <label class="col-lg-3 col-md-4 control-label" for="">Owner's Phone</label>
                         <div class="col-lg-9 col-md-8">
-                            <input type="text" class="form-control" value="" name="stock_number">
+                            <input type="text" class="form-control" value="" name="ownerphone" placeholder="Owner's Phone">
                         </div>
                     </div>
                     <!-- End .form-group  -->

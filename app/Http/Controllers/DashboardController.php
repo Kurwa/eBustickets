@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -15,7 +16,11 @@ class DashboardController extends AuthorizedController
      */
     public function index()
     {
-        return view('dashboard.index');
+        $today = 1;
+        $users = 3;
+        $agents = 1;
+        $buses = 3;
+        return view('dashboard.index',compact('today','users','agents','buses'));
     }
 
     /**

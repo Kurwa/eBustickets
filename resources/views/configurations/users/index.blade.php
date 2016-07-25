@@ -23,7 +23,6 @@
             <h4 class="panel-title"><i class="fa fa-search"></i>  View Users List</h4>
             <div class="panel-controls panel-controls-right">
                 <button class="btn btn-info mr5 mb10 btn-sm" style="margin-top: 10px" data-toggle="modal" data-target="#myLargeModal" onclick="Moneyformat()"><i class="fa fa-plus"></i> Add</button>
-
             </div>
         </div>
         <div class="panel-body">

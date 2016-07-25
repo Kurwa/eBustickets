@@ -34,10 +34,25 @@ class ConfigurationController extends AuthorizedController
      */
     public function index()
     {
+
+        if (Sentinel::getUser()->inRole('admin'))
+        {
+            $roles =  DB::table('roles')->whereNotIn('id',[1,2])->lists('name', 'id');
+            $company =  DB::table('companies')->whereId(Sentinel::getUser()->companies_id)->lists('name', 'id');
+            $users = User::whereNotIn('username',['super','admin'])
+                            ->whereCompaniesId(Sentinel::getUser()->companies_id)
+                            ->with(['company','roles'])
+                            ->get();
+//            return $users;
+            return view('configurations.users.index',compact('roles','company','users'));
+        }
+        elseif(Sentinel::getUser()->inRole('agents')){
+            return view('permission-denied');
+        }
         $roles =  DB::table('roles')->whereNotIn('id',[1])->lists('name', 'id');
         $company =  DB::table('companies')->lists('name', 'id');
-        $users = User::whereNotIn('id',[0])->get();
-//        return $users;
+        $users = User::with(['company','roles'])
+                        ->get();
         return view('configurations.users.index',compact('roles','company','users'));
     }
 
@@ -113,9 +128,9 @@ class ConfigurationController extends AuthorizedController
             Session::flash('success','Account successfully created');
             return Redirect::to('configurations/users');
         }
-        return Redirect::to('configurations/register')
-            ->withInput()
-            ->withErrors('Failed to register.');
+//        return Redirect::to('configurations/register')
+//            ->withInput()
+//            ->withErrors('Failed to register.');
 
     }
 
@@ -169,6 +184,14 @@ class ConfigurationController extends AuthorizedController
      */
     public function role_index()
     {
+        if (Sentinel::getUser()->inRole('admin'))
+        {
+            $roles = Role::whereNotIn('slug',['super'])->get();
+            return view('configurations.roles.index',compact('roles'));
+        }
+        elseif(Sentinel::getUser()->inRole('agents')){
+            return view('permission-denied');
+        }
         $roles = Role::all();
         return view('configurations.roles.index',compact('roles'));
     }
@@ -205,5 +228,24 @@ class ConfigurationController extends AuthorizedController
     public function system_index()
     {
         return view('configurations.system-configuration');
+    }
+
+    /*
+     *
+     * */
+    public function registersuper()
+    {
+        $input = [
+            'email'          => 'admin@admin.com',
+            'username'       => "super",
+            'password'       => "super",
+            'first_name'      => "Admin",
+            'last_name'       => 'Insta',
+            'companies_id' => 0,
+        ];
+        $user = Sentinel::registerAndActivate($input);
+        $role_id = 1;
+        $role = Sentinel::findRoleById($role_id);
+        $role->users()->attach($user);
     }
 }

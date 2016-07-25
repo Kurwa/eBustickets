@@ -3,9 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Model\Companies;
+use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class CustomerController extends Controller
 {
@@ -16,8 +21,13 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $companies = Companies::all();
-        return view('customers.index',compact('companies'));
+        if(Sentinel::inRole('super')){
+            $companies = Companies::all();
+            return view('customers.index',compact('companies'));
+        }else{
+            return view('permission-denied');
+        }
+
     }
 
     /**
@@ -32,13 +42,27 @@ class CustomerController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        //
+        $input = Input::except('_token');
+        $rules = [
+            'name'=>'required',
+            'address' => 'required',
+            'telephone' => 'required',
+            'email' => 'required'
+        ];
+        $validator = Validator::make($input, $rules);
+        if ($validator->fails())
+        {
+            return Redirect::back()
+                ->withInput()
+                ->withErrors($validator);
+        }
+        Companies::FirstOrCreate($input);
+        Session::flash('success','Customer successfully Added');
+        return Redirect::to('customers-lists');
     }
 
     /**
