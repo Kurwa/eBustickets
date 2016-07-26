@@ -95,38 +95,16 @@
                     </div>
                 </div>
             </div>
-            {{--<div class="mp-offesr no-margin">--}}
-            {{--<div class="wrapper-padding-a">--}}
-            {{--<div class="offer-slider duble-margin">--}}
-            {{--<header class="fly-in page-lbl">--}}
-            {{--<div class="offer-slider-lbl">We are Offering the hottest offers</div>--}}
-            {{--<p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit,--}}
-            {{--sed quia consequuntur magni dolores eos qui ratione.--}}
-            {{--</p>--}}
-            {{--</header>--}}
-            {{--</div>--}}
-            {{--</div>--}}
-            {{--</div>--}}
             <div class="testimonials" style="margin-top: -10px">
                 <div class="testimonials-lbl fly-in">what our client say</div>
-                <div class="testimonials-lbl-a fly-in">Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.</div>
+                {{--<div class="testimonials-lbl-a fly-in">--}}
+                    {{--Nemo enim ipsam voluptatem quia voluptas sit--}}
+                    {{--aspernatur aut odit aut fugit.</div>--}}
 
                 <div class="testimonials-holder fly-in">
                     <div id="testimonials-slider">
                         <div class="testimonials-i">
-                            {{--<div class="testimonials-a"><img alt="" src="img/testimonial.gif" /></div>--}}
                             <div class="testimonials-b">"Qerspeciatis unde omnis iste natus doxes sit voluptatem accusantium doloremque laudantium, totam aperiam eaque ipsa quae ab illo inventore veritatis et quasi architecto"</div>
-                            {{--<div class="testimonials-c">--}}
-                            {{--<nav>--}}
-                            {{--<ul>--}}
-                            {{--<li><a href="#"><img alt="" src="img/ts-star.png" /></a></li>--}}
-                            {{--<li><a href="#"><img alt="" src="img/ts-star.png" /></a></li>--}}
-                            {{--<li><a href="#"><img alt="" src="img/ts-star.png" /></a></li>--}}
-                            {{--<li><a href="#"><img alt="" src="img/ts-star.png" /></a></li>--}}
-                            {{--<li><a href="#"><img alt="" src="img/ts-star.png" /></a></li>--}}
-                            {{--</ul>--}}
-                            {{--</nav>--}}
-                            {{--</div>--}}
                             <div class="testimonials-d">Albert Dowson, Company Director</div>
                         </div>
                         <!-- \\ -->
@@ -157,7 +135,7 @@
                                 @endforeach
                             </select></div>
                         <div class="col-sm-5">
-                            <input class="form-control date-inpt" required name="dateoftravel" placeholder="Travel Date">
+                            <input class="form-control date-inpt" id="datetimepicker" required name="dateoftravel" placeholder="Travel Date">
                         </div>
                         <div class="col-sm-2">
                             <button type="submit" class="btn btn-primary">Search</button>
@@ -174,6 +152,41 @@
             </div>
         </div>
     </div>
+    <script type="application/javascript">
+        $(document).ready(function(){
+            $('#datetimepicke').datetimepicker({
+                format:'Y-m-d H:i',
+                minDate: "+1970/01/01",
+                allowTimes:['8:00']
+            });
+//            var d = new Date();
+//            var day = d.getDate();
+//            var logic = function(currentDateTime){
+//                // 'this' is jquery object datetimepicker
+//                if(currentDateTime.getDate() == day) {
+//                    this.setOptions({
+//                        minTime:+1,
+//                        dateFormat: 'dd-mm-yy',
+////                        maxTime:'19:00'
+//                    });
+//                }else
+//                    this.setOptions({
+//                        minTime:'8:00',
+//                        maxTime:'22:00'
+//                    });
+//            };
+//            $('#datetimepicker').datetimepicker({
+//                onChangeDateTime:logic,
+//                onShow:logic,
+//                minDate: 0,
+//                maxDate: '-1970-01-05',
+//                timepickerScrollbar:false,
+//                 allowTimes:[
+//                        '8:00','10:00'
+//                      ]
+//            });
+        });
+    </script>
 @stop
 
 <!-- Small Modal -->

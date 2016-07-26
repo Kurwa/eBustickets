@@ -31,9 +31,9 @@
                 <a href="#" class="menu-btn"></a>
                 <nav class="header-nav">
                     <ul>
-                        <li><a href="#">Home</a> </li>
-                        <li><a href="#">about us</a></li>
-                        <li><a href="#">contact us</a></li>
+                        <li><a href="{{ url('booking/'.$slug ) }}">Home</a> </li>
+                        <li><a href="{{ url('booking/'.$slug.'/aboutus') }}">about us</a></li>
+                        <li><a href="{{ url('booking/'.$slug.'/contacts') }}">contact us</a></li>
                         <li><a data-toggle="modal" data-target="#myModal" >Search Tickets</a></li>
                     </ul>
                 </nav>

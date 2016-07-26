@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Model\Route;
+use App\Model\Routesbuses;
 use App\Model\Routespoint;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -116,5 +118,13 @@ class RouteController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function views()
+    {
+        $bus = DB::table('buses')->whereCompaniesId(Sentinel::getUser()->companies_id)->lists('bus_number','id');
+        $rout = Route::whereCompaniesId(Sentinel::getUser()->companies_id)->get();
+        $routes = Routesbuses::with(['routes','buses'])->get();
+        return view('routes.routes-buses',compact('routes','bus','rout'));
     }
 }

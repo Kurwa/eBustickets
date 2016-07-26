@@ -41,8 +41,8 @@ class Booking extends Model
         {
             return $this->belongsTo('App\Model\User','insert_by');
         }
-    public function payment()
-    {
-        return $this->belongsTo('App\Model\Payment','payments_id');
-    }
+        public function payment()
+        {
+            return $this->belongsTo('App\Model\Payment','payments_id');
+        }
 }

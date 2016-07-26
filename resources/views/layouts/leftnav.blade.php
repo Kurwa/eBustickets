@@ -35,8 +35,12 @@
                             <i class="fa fa-home"></i><span class="txt">Dashboard</span></a>
                     </li>
                         {{--@if(Sentinel::getUser()->id)--}}
-                        <li class="">
-                            <a href="{{ url('routes/routes-lists') }}"><i class="fa   fa-code-fork"></i><span class="txt">Manage Routes</span></a>
+                    <li class="">
+                        <a href="#"><i class="fa   fa-code-fork"></i><span class="txt">Manage Routes</span></a>
+                        <ul class="sub">
+                            <li><a href="{{ url('routes/routes-lists') }}"><span class="txt">Routes Lists</span></a></li>
+                            <li><a href="{{ url('routes/routes-assign') }}"><span class="txt">Routes Assign</span></a></li>
+                         </ul>
                         </li>
                         <li class="">
                             <a href="#"><i class="fa  fa-bus"></i><span class="txt"> Manage Buses</span></a>
@@ -56,8 +60,8 @@
 
                             </ul>
                         </li>
-                        <li class="">
-                            <a href="{{ url('agents') }}"><i class="fa  fa-group"></i> <span class="txt">Passengers</span></a>
+                        <li class="disabled">
+                            <a href="#"><i class="fa  fa-group"></i> <span class="txt">Passengers</span></a>
                             {{--<ul class="sub">--}}
                             {{--<li><a href="email-inbox.html"><span class="txt">Inbox</span></a>--}}
                             {{--</li>--}}
@@ -67,8 +71,8 @@
                             {{--</li>--}}
                             {{--</ul>--}}
                         </li>
-                    {{--@endif--}}
 
+                    @if(\Cartalyst\Sentinel\Laravel\Facades\Sentinel::inRole('super'))
                     <li class="">
                         <a href="{{ url('customers-lists') }}"><i class="fa  fa-group"></i> <span class="txt">Customers</span></a>
                         {{--<ul class="sub">--}}
@@ -80,8 +84,9 @@
                             {{--</li>--}}
                         {{--</ul>--}}
                     </li>
-                    <li class="">
-                        <a href="{{ url('agents') }}"><i class="fa  fa-group"></i> <span class="txt">Agents</span></a>
+                    @endif
+                    <li class="disabled">
+                        <a href="#"><i class="fa  fa-group"></i> <span class="txt">Agents</span></a>
                         {{--<ul class="sub">--}}
                             {{--<li><a href="email-inbox.html"><span class="txt">Inbox</span></a>--}}
                             {{--</li>--}}
@@ -100,15 +105,6 @@
                             {{--</li>--}}
                         </ul>
                     </li>
-                    {{--<li class="disabled">--}}
-                        {{--<a href="#"><i class="fa fa-wrench"></i><span class="txt">Administration</span></a>--}}
-                        {{--<ul class="sub">--}}
-                            {{--<li><a href="login.html"><span class="txt">Login</span></a>--}}
-                            {{--</li>--}}
-                            {{--<li><a href="lock-screen.html"><span class="txt">Lock screen</span></a>--}}
-                            {{--</li>--}}
-                        {{--</ul>--}}
-                    {{--</li>--}}
                     <li class="">
                         <a href="#"><i class="fa fa-cogs"></i><span class="txt">Configurations</span></a>
                         <ul class="sub">

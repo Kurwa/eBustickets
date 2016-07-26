@@ -28,7 +28,7 @@ input,select,button,textarea {outline:none;}
 .body-padding {padding-bottom:30px;}
 .index-page .body-padding {padding-bottom:0px;}
 .body-wrapper {padding-bottom:110px;padding-top:170px;}
-#top {position:fixed;left:0px;top:0px;width:100%;z-index:999;}
+#top {position:absolute;left:0px;top:0px;width:100%;z-index:999;}
 .mobile-menu {background:#141d1e; display:none; width:100%; position:absolute; left:0px; top:89px; padding-top:27px; padding-bottom:26px;}
 .mobile-menu li {display:block; padding:0px 60px 0px 60px;}
 .mobile-menu li a {font-size:12px; color:#fff; font-family: DejaVu Sans, 'trebuchet ms', verdana, sans-serif; display:block; padding:14px 0px 14px 0px; font-weight:600; text-transform:uppercase; text-decoration:none; border-bottom:1px solid #1a2526;}
@@ -2027,9 +2027,9 @@ nav ul,nav ul li {margin:0px;padding:0px;list-style:none;}
 .bookin-three-coll .booking-form-i:nth-child(3n) {float:right; margin-right:0px;}
 .bookin-three-coll .booking-form-i .form-calendar-b {width:80px;}
 .add-passanger {font-size:12px; color:#848484; font-weight:500; text-decoration:none; margin:4px 0px 0px 0px; padding:0px 0px 0px 14px; float:right; background:url(../img/add-pass-icon.png) left top no-repeat; background-position:left 2px;}
-.contacts-map {padding-top:129px;}
-.contacts-map #map {height:457px;}
-.contacts-page {max-width:1100px; margin:0 auto; padding-top:76px;}
+/*.contacts-map {padding-top:129px;}*/
+/*.contacts-map #map {height:457px;}*/
+.contacts-page {max-width:1100px; margin:0 auto; padding-top:140px;}
 .contacts-page .page-lbl p {font-size:15px; color:#455051;}
 
 .contacts-page .page-lbl {margin-bottom:49px;}

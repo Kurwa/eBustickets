@@ -28,7 +28,7 @@
             $("#buse_id").val(argument);
         }
     </script>
-<div class="main-cont">
+<div class="main-cont"  style="margin-top: -30px;margin-bottom: 10px;">
     <div class="body-wrapper">
         <div class="wrapper-padding">
             <div class="page-head">
@@ -54,18 +54,21 @@
                                         </thead>
                                         <tbody>
                                         @foreach($buses as $bus)
-                                        <tr>
-                                            <td><a href="#">{{ $bus->bus_number }}</a> </td>
-                                            <td><span style="text-align:center">{{ $bus->noofseats }}</span></td>
-                                            <td><span style="text-align:center">29</span></td>
-                                            <td><span style="text-align:center">31</span></td>
-                                            <td>
-                                                <div>
-                                                    <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#myLargeModal" onclick="Buses({{ $bus->id }})">book</button>
-                                                    <button class="btn btn-info btn-sm">check</button>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                            @if($bus->remain > 0)
+                                                <tr>
+                                                    <td><a href="#">{{ $bus->buses->bus_number }}</a> </td>
+                                                    <td><span style="text-align:center">{{ $bus->buses->noofseats }}</span></td>
+                                                    <td><span style="text-align:center">{{ $bus->taken }}</span></td>
+                                                    <td><span style="text-align:center">{{ $bus->remain }}</span></td>
+                                                    <td>
+                                                        <div>
+                                                            <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#myLargeModal" onclick="Buses({{ $bus->id }})">
+                                                                <i class="fa  fa-bus"></i> book</button>
+                                                            <button class="btn btn-info btn-sm">check</button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endif
                                         @endforeach
                                         </tbody>
                                     </table>
@@ -92,7 +95,11 @@
             </div>
             {!! Form::open(array('class'=>'form-horizontal', 'files'=>true ,'autocomplete' => 'off')) !!}
             <div class="modal-body" id="">
-                <input type="hidden" name="buse" value="" id="buse_id">
+                <input type="hidden" name="buses" value="" id="buse_id">
+                <input type="hidden" name="travelday" value="{{ $date }}" id="travelday">
+                <input type="hidden" name="routes_id" value="{{ $route_id }}" id="routes_id">
+                <input type="hidden" name="company" value="{{ $id }}" id="company">
+
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="col-lg-3 col-md-4 control-label" for="">First Name</label>

@@ -68,7 +68,7 @@ Home
                     <a class="lead-stats" href="#">
                         <span class="stats-number buses">{{ number_format($buses) }}</span>
                         <span class="stats-icon"><i class="fa fa-bus fa-3x"></i></span>
-                        <h5>Customers</h5>
+                        <h5>Buses</h5>
                     </a>
                 </div>
             </div><!-- End .panel -->

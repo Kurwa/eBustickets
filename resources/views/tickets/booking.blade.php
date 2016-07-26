@@ -143,7 +143,7 @@
                         <td>
                             {{ $booking->payment->name }}
                         </td>
-                        <td></td>
+                        <td>{{ strftime('%d -%b- %Y',strtotime($booking->dateoftravel))  }}</td>
                         <td>
                             <div class="btn-group">
                                 <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> edit</a>

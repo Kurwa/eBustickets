@@ -1,6 +1,3 @@
-
-
-
 <!-- /.modal -->
 <footer class="footer-a">
     <div class="wrapper-padding">
@@ -66,7 +63,7 @@
                     $('.ui-datepicker').css('z-index', 99999999999999);
                 }, 0);
             },
-            dateFormat:'dd-mm-yy',
+            dateFormat:'yy-mm-dd',
             changeMonth: true,
             changeYear: true,
             minDate: +1

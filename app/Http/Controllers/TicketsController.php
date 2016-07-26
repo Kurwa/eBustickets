@@ -7,6 +7,7 @@ use App\Model\Route;
 use App\Model\Routespoint;
 use App\Model\Seatplan;
 use App\Model\Ticket;
+use Carbon\Carbon;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Illuminate\Http\Request;
 
@@ -100,6 +101,7 @@ class TicketsController extends Controller
 
     public function booking()
     {
+
         $pays = DB::table('payments')->lists('name','id');
         $routes = Route::whereCompaniesId(Sentinel::getUser()->companies_id)->get();
         $buses = DB::table('buses')
@@ -107,6 +109,8 @@ class TicketsController extends Controller
                     ->lists('bus_number','id');
         $bookings = Booking::with(['init','ends','route','buses','user'])
                     ->whereCompaniesId(Sentinel::getUser()->companies_id)
+                    ->orderBy('id', 'DESC')
+//                    ->where('dateoftravel','=',date('Y-m-d'))
                     ->get();
         return view('tickets.booking',compact('routes','buses','bookings','pays'));
     }
@@ -128,7 +132,9 @@ class TicketsController extends Controller
             'seat_number' => Input::get('seatno'),
             'payments_id' => Input::get('payments'),
             'amount' => str_replace(",","",Input::get('amount')),
-            'dateoftravel' => Input::get('travelday')
+            'dateoftravel' => Input::get('travelday'),
+            'insert_by' => 2,
+            'companies_id' => 1,
         ];
         $rules = [
             'routes_id' => 'required',
@@ -144,14 +150,12 @@ class TicketsController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }else{
-//            return $input;
             Booking::FirstOrCreate($input);
             Session::flash('success','Successful Added');
             return Redirect::to('tickets/bookings');
         }
 
     }
-
     public function routes_taking()
     {
         $id = Input::get('routes_id');

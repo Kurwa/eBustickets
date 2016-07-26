@@ -14,9 +14,10 @@
 Route::get('/','DashboardController@index');
 
     /*
-     * Logins Forms and Logout
+     * Login Forms and Logout
      * */
 
+//Route::get('register','ConfigurationController@registersuper');
 Route::get('login','AuthController@login');
 Route::post('login', 'AuthController@processLogin');
 Route::get('logout','AuthController@logout');
@@ -86,6 +87,9 @@ Route::group(['middleware' => 'auth','prefix'=>'configurations'], function () {
 Route::group(['middleware' => 'auth','prefix'=>'routes'], function () {
     Route::get('routes-lists','RouteController@index');
     Route::post('routes-lists','RouteController@store');
+
+    Route::get('routes-assign','RouteController@views');
+    Route::post('routes-assign','RouteController@post');
 });
 
 
@@ -142,14 +146,26 @@ Route::group(['middleware' => 'auth','prefix'=>'tickets'], function () {
     Route::get('template_view','TicketsController@template_view');
 
 });
-Route::get('booking/{slug}','WebsiteController@index');
+    /*
+     *  BUS WEBSITE BOOKING
+     * */
+Route::group(['prefix'=>'booking'], function () {
+    Route::get('{slug}','WebsiteController@index');
+    Route::post('{slug}','WebsiteController@post');
+    Route::get('{slug}/complete','WebsiteController@complete');
+
+    Route::get('{slug}',[
+        'as' => 'home',
+        'uses' => 'WebsiteController@index'
+    ]);
+    Route::get('{slug}/aboutus',[
+        'as' => 'about',
+        'uses' => 'WebsiteController@aboutus'
+    ]);
+    Route::get('{slug}/contacts',[
+        'as' => 'contacts',
+        'uses' => 'WebsiteController@contacts'
+    ]);
 
 
-
-
-
-
-//Route::get('register','ConfigurationController@registersuper');
-
-
-
+});
