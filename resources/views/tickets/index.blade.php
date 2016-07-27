@@ -80,7 +80,7 @@
                     {{--*/ $i ++ /*--}}
                     <tr>
                         <td>{{ $i }}</td>
-                        <td><a href="#"> {{ $ticket->firstname }}{{ $ticket->lastname }}</a></td>
+                        <td><a href="#"> {{ $ticket->firstname }} {{ $ticket->lastname }}</a></td>
                         <td><a href="#">{{ $ticket->ticket }}</a> </td>
                         <td><a href="#">{{ $ticket->seat_number }}</a></td>
                         <td><a href="#"> {{ $ticket->buses->bus_number }}</a> </td>

@@ -14,6 +14,15 @@
 @section('contents')
     <script type="application/javascript">
         $(document).ready(function(){
+
+            document.getElementById('input-name').value = "{{ \Illuminate\Support\Facades\Input::get('name') }}";
+            document.getElementById('traveldate').value = "{{ \Illuminate\Support\Facades\Input::get('date') }}";
+            document.getElementById('buses').value = "{{ \Illuminate\Support\Facades\Input::get('buses') }}";
+
+            $(".traveldate").datetimepicker({
+                format : "Y-m-d"
+            });
+
             $("#routes").change(function(){
                 $("#data").val($('#routes').val());
                 $.ajax({
@@ -69,25 +78,28 @@
                 <div class="col-sm-3">
                     <div class="form-group">
                         {{--<label class="control-label" for="input-price">Price</label>--}}
-                        <input name="name" value="" placeholder="Name" id="input-price" class="form-control" type="text">
+                        <input name="name" value="" placeholder="Name" id="input-name" class="form-control" type="text">
                     </div>
                 </div>
                 <div class="col-sm-2">
                     <div class="form-group">
                         {{--<label class="control-label" for="input-price">Price</label>--}}
-                        <input name="busnumber" value="" placeholder="Seat or Bus Number" id="date" class="form-control" type="text">
+                        {!! Form::select('buses',
+                            (['' => 'Select Number'] + $buses),
+                                null,
+                                ['class' => 'form-control','id'=>'buses']) !!}
                     </div>
                 </div>
                 <div class="col-sm-2">
                     <div class="form-group">
                         {{--<label class="control-label" for="input-price">Price</label>--}}
-                        <input name="date" value="" placeholder="Date of Travel" id="input-price" class="form-control" type="text">
+                        <input name="date" value="" placeholder="Date of Travel" id="traveldate" class="form-control traveldate" type="text">
                     </div>
                 </div>
                 <div class="col-sm-3">
                     <div class="form-group">
                         {{--<label class="control-label" for="input-price">Price</label>--}}
-                        <input name="agent" value="" placeholder="Agent" id="input-price" class="form-control" type="text">
+                        {{--<input name="agent" value="" placeholder="Agent" id="input-price" class="form-control " type="text">--}}
                     </div>
                 </div>
                 <div class="col-sm-2">
@@ -132,13 +144,13 @@
                     {{--*/ $i ++/*--}}
                     <tr>
                         <td>{{ $i }}</td>
-                        <td>{{ $booking->firstname }}{{ $booking->lastname }}</td>
+                        <td>{{ $booking->firstname }} {{ $booking->lastname }}</td>
                         <td><a href="#">{{ $booking->buses->bus_number }}</a></td>
                         <td><a href="#"> {{ $booking->seat_number }}</a> </td>
                         <td>{{ $booking->init->name }}</td>
                         <td>{{ $booking->ends->name }}</td>
                         <td><a href="#">
-                                {{--{{ $booking->user->username }}--}}
+                                {{ $booking->user->name }}
                             </a> </td>
                         <td>
                             {{ $booking->payment->name }}
@@ -223,6 +235,13 @@
                         <!-- End .form-group  -->
                     </div>
                     <div class="col-md-6">
+                        <!-- End .form-group  -->
+                        <div class="form-group">
+                            <label class="col-lg-3 col-md-4 control-label" for="">Date Of Travel</label>
+                            <div class="col-lg-9 col-md-8">
+                                <input type="text" class="form-control date" value="" id="travelday" required="required" readonly name="travelday" placeholder="Date Of Travel">
+                            </div>
+                        </div>
                         <div class="form-group">
                          <label class="col-lg-3 col-md-4 control-label" for="">Bus Number</label>
                              <div class="col-lg-9 col-md-8">
@@ -255,13 +274,7 @@
                                 <input type="text" class="form-control cost" value="" required="required" name="amount" placeholder="Payment Amount">
                             </div>
                         </div>
-                        <!-- End .form-group  -->
-                        <div class="form-group">
-                            <label class="col-lg-3 col-md-4 control-label" for="">Date Of Travel</label>
-                            <div class="col-lg-9 col-md-8">
-                                <input type="text" class="form-control date" value="" required="required" readonly name="travelday" placeholder="Date Of Travel">
-                            </div>
-                        </div>
+
                     </div>
                 </div>
                 <div class="modal-footer">

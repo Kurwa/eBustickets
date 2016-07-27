@@ -30,6 +30,8 @@ class WebsiteController extends Controller
     {
         $route_id = Input::get('route');
         $date = Input::get('dateoftravel');
+        $company = Companies::whereSlug($bus)->first()->name;
+        view()->share('company',$company);
         view()->share('slug',$bus);
         if(!is_null($route_id)){
             $id = Companies::whereSlug($bus)->first()->id;
@@ -52,17 +54,23 @@ class WebsiteController extends Controller
 
     public function aboutus($bus)
     {
+        $company = Companies::whereSlug($bus)->first()->name;
+        view()->share('company',$company);
         view()->share('slug',$bus);
         return view('website.aboutus');
     }
     public function contacts($bus)
     {
+        $company = Companies::whereSlug($bus)->first()->name;
+        view()->share('company',$company);
         view()->share('slug',$bus);
         return view('website.contacts');
     }
 
     public   function complete($bus)
     {
+        $company = Companies::whereSlug($bus)->first()->name;
+        view()->share('company',$company);
         view()->share('slug',$bus);
         return view('website.complete');
     }
@@ -83,6 +91,7 @@ class WebsiteController extends Controller
             'amount' => str_replace(",","",Input::get('amount')),
             'dateoftravel' => Input::get('travelday'),
             'routes_id' =>  Input::get('routes_id'),
+            'insert_by' => 2,
             'companies_id' => Input::get('company'),
         ];
         $rules = [
@@ -104,4 +113,5 @@ class WebsiteController extends Controller
             return Redirect::to('booking/'.$bus.'/complete');
         }
     }
+
 }

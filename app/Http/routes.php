@@ -167,5 +167,6 @@ Route::group(['prefix'=>'booking'], function () {
         'uses' => 'WebsiteController@contacts'
     ]);
 
-
 });
+
+Route::get('seats','TicketsController@seats');

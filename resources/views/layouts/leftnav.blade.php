@@ -31,10 +31,10 @@
             </div>
             <div class="side-nav">
                 <ul class="nav">
-                    <li><a href="{{ url('/') }}">
-                            <i class="fa fa-home"></i><span class="txt">Dashboard</span></a>
-                    </li>
-                        {{--@if(Sentinel::getUser()->id)--}}
+                        <li><a href="{{ url('/') }}">
+                                <i class="fa fa-home"></i><span class="txt">Dashboard</span></a>
+                        </li>
+                    @if(\Cartalyst\Sentinel\Laravel\Facades\Sentinel::inRole('super') || \Cartalyst\Sentinel\Laravel\Facades\Sentinel::inRole('admin'))
                     <li class="">
                         <a href="#"><i class="fa   fa-code-fork"></i><span class="txt">Manage Routes</span></a>
                         <ul class="sub">
@@ -51,6 +51,8 @@
                                 <li><a href="{{ url('buses/buses-insurances') }}"><span class="txt">Insurance</span></a></li>
                             </ul>
                         </li>
+                    @endif
+                        @if(\Cartalyst\Sentinel\Laravel\Facades\Sentinel::inRole('agents') || \Cartalyst\Sentinel\Laravel\Facades\Sentinel::inRole('admin'))
                         <li class="">
                             <a href="#"><i class="fa  fa-ticket"></i> <span class="txt">Tickets</span></a>
                             <ul class="sub">
@@ -60,6 +62,7 @@
 
                             </ul>
                         </li>
+                        @endif
                         <li class="disabled">
                             <a href="#"><i class="fa  fa-group"></i> <span class="txt">Passengers</span></a>
                             {{--<ul class="sub">--}}
@@ -71,50 +74,51 @@
                             {{--</li>--}}
                             {{--</ul>--}}
                         </li>
-
-                    @if(\Cartalyst\Sentinel\Laravel\Facades\Sentinel::inRole('super'))
-                    <li class="">
-                        <a href="{{ url('customers-lists') }}"><i class="fa  fa-group"></i> <span class="txt">Customers</span></a>
-                        {{--<ul class="sub">--}}
-                            {{--<li><a href="email-inbox.html"><span class="txt">Inbox</span></a>--}}
-                            {{--</li>--}}
-                            {{--<li><a href="email-read.html"><span class="txt">Read email</span></a>--}}
-                            {{--</li>--}}
-                            {{--<li><a href="email-write.html"><span class="txt">Write email</span></a>--}}
-                            {{--</li>--}}
-                        {{--</ul>--}}
-                    </li>
-                    @endif
-                    <li class="disabled">
-                        <a href="#"><i class="fa  fa-group"></i> <span class="txt">Agents</span></a>
-                        {{--<ul class="sub">--}}
-                            {{--<li><a href="email-inbox.html"><span class="txt">Inbox</span></a>--}}
-                            {{--</li>--}}
-                            {{--<li><a href="email-read.html"><span class="txt">Read email</span></a>--}}
-                            {{--</li>--}}
-                            {{--<li><a href="email-write.html"><span class="txt">Write email</span></a>--}}
-                            {{--</li>--}}
-                        {{--</ul>--}}
-                    </li>
-                    <li class="disabled">
-                        <a href="#"><i class=" l-ecommerce-graph2"></i><span class="txt">Reports Center</span></a>
-                        <ul class="sub">
-                            {{--<li><a href="maps-google.html"><span class="txt">Google maps</span></a>--}}
-                            {{--</li>--}}
-                            {{--<li><a href="maps-vector.html"><span class="txt">Vector maps</span></a>--}}
-                            {{--</li>--}}
-                        </ul>
-                    </li>
-                    <li class="">
-                        <a href="#"><i class="fa fa-cogs"></i><span class="txt">Configurations</span></a>
-                        <ul class="sub">
-                            <li><a href="{{ url('system-configuration') }}"><span class="txt">System Config</span></a>
+                        @if(\Cartalyst\Sentinel\Laravel\Facades\Sentinel::inRole('super'))
+                         <li class="">
+                            <a href="{{ url('customers-lists') }}"><i class="fa  fa-group"></i> <span class="txt">Customers</span></a>
+                            {{--<ul class="sub">--}}
+                                {{--<li><a href="email-inbox.html"><span class="txt">Inbox</span></a>--}}
+                                {{--</li>--}}
+                                {{--<li><a href="email-read.html"><span class="txt">Read email</span></a>--}}
+                                {{--</li>--}}
+                                {{--<li><a href="email-write.html"><span class="txt">Write email</span></a>--}}
+                                {{--</li>--}}
+                            {{--</ul>--}}
+                        </li>
+                        @endif
+                        @if(\Cartalyst\Sentinel\Laravel\Facades\Sentinel::inRole('super') || \Cartalyst\Sentinel\Laravel\Facades\Sentinel::inRole('admin'))
+                            <li class="disabled">
+                                <a href="#"><i class="fa  fa-group"></i> <span class="txt">Agents</span></a>
+                                {{--<ul class="sub">--}}
+                                    {{--<li><a href="email-inbox.html"><span class="txt">Inbox</span></a>--}}
+                                    {{--</li>--}}
+                                    {{--<li><a href="email-read.html"><span class="txt">Read email</span></a>--}}
+                                    {{--</li>--}}
+                                    {{--<li><a href="email-write.html"><span class="txt">Write email</span></a>--}}
+                                    {{--</li>--}}
+                                {{--</ul>--}}
                             </li>
-                            <li><a href="{{ url('configurations/users') }}"><span class="txt">Users</span></a>
-                            <li><a href="{{ url('configurations/roles') }}"><span class="txt">Roles</span></a>
+                            <li class="disabled">
+                                <a href="#"><i class=" l-ecommerce-graph2"></i><span class="txt">Reports Center</span></a>
+                                <ul class="sub">
+                                    {{--<li><a href="maps-google.html"><span class="txt">Google maps</span></a>--}}
+                                    {{--</li>--}}
+                                    {{--<li><a href="maps-vector.html"><span class="txt">Vector maps</span></a>--}}
+                                    {{--</li>--}}
+                                </ul>
                             </li>
-                        </ul>
-                    </li>
+                            <li class="">
+                                <a href="#"><i class="fa fa-cogs"></i><span class="txt">Configurations</span></a>
+                                <ul class="sub">
+                                    <li><a href="{{ url('system-configuration') }}"><span class="txt">System Config</span></a>
+                                    </li>
+                                    <li><a href="{{ url('configurations/users') }}"><span class="txt">Users</span></a>
+                                    <li><a href="{{ url('configurations/roles') }}"><span class="txt">Roles</span></a>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endif
                 </ul>
             </div>
             {{--<!-- / side-nav -->--}}

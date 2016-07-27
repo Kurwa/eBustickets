@@ -101,17 +101,56 @@ class TicketsController extends Controller
 
     public function booking()
     {
-
+        $name = Input::get('name');
+        $bus = Input::get('buses');
+        $date = Input::get('date');
+        $agent = Input::get('agent');
         $pays = DB::table('payments')->lists('name','id');
         $routes = Route::whereCompaniesId(Sentinel::getUser()->companies_id)->get();
         $buses = DB::table('buses')
                     ->whereCompaniesId(Sentinel::getUser()->companies_id)
                     ->lists('bus_number','id');
-        $bookings = Booking::with(['init','ends','route','buses','user'])
-                    ->whereCompaniesId(Sentinel::getUser()->companies_id)
-                    ->orderBy('id', 'DESC')
-//                    ->where('dateoftravel','=',date('Y-m-d'))
-                    ->get();
+        if(!is_null($name) && $bus == "" && $date == "" && $agent == ""){
+            $bookings = Booking::with(['init','ends','route','buses','user'])
+                ->whereCompaniesId(Sentinel::getUser()->companies_id)
+                ->orderBy('id', 'DESC')
+                ->where('firstname','=',$name)
+                // ->where('dateoftravel','=',date('Y-m-d'))
+                ->get();
+        }elseif(!is_null($bus) && $name == "" && $date == "" && $agent ==""){
+            $bookings = Booking::with(['init','ends','route','buses','user'])
+                ->whereCompaniesId(Sentinel::getUser()->companies_id)
+                ->orderBy('id', 'DESC')
+                 ->whereBusesId($bus)
+                ->get();
+        }elseif(!is_null($date) && $bus=="" && $name == "" && $agent == ""){
+            $bookings = Booking::with(['init','ends','route','buses','user'])
+                ->whereCompaniesId(Sentinel::getUser()->companies_id)
+                ->orderBy('id', 'DESC')
+                 ->where('dateoftravel','=',$date)
+                ->get();
+        }elseif(!is_null($date) && !is_null($bus) && $name == "" && $agent == ""){
+            $bookings = Booking::with(['init','ends','route','buses','user'])
+                ->whereCompaniesId(Sentinel::getUser()->companies_id)
+                ->orderBy('id', 'DESC')
+                ->where('dateoftravel','=',$date)
+                ->whereBusesId($bus)
+                ->get();
+        }elseif(!is_null($date) && !is_null($bus) && !is_null($name)){
+            $bookings = Booking::with(['init','ends','route','buses','user'])
+                ->whereCompaniesId(Sentinel::getUser()->companies_id)
+                ->orderBy('id', 'DESC')
+                ->where('dateoftravel','=',$date)
+                ->whereBusesId($bus)
+                ->where('firstname','=',$name)
+                ->get();
+        }else{
+            $bookings = Booking::with(['init','ends','route','buses','user'])
+                ->whereCompaniesId(Sentinel::getUser()->companies_id)
+                ->orderBy('id', 'DESC')
+                // ->where('dateoftravel','=',date('Y-m-d'))
+                ->get();
+        }
         return view('tickets.booking',compact('routes','buses','bookings','pays'));
     }
 
@@ -133,8 +172,8 @@ class TicketsController extends Controller
             'payments_id' => Input::get('payments'),
             'amount' => str_replace(",","",Input::get('amount')),
             'dateoftravel' => Input::get('travelday'),
-            'insert_by' => 2,
-            'companies_id' => 1,
+            'insert_by' => 1,
+            'companies_id' => Input::get('company'),
         ];
         $rules = [
             'routes_id' => 'required',
@@ -196,6 +235,26 @@ class TicketsController extends Controller
         $right = range($seat->firstletter, $seat->lastletter);
         $view = view('tickets.ticket-template',compact('right','seat'));
         return $view;
+
+    }
+    public function seats()
+    {
+        $id = 2;
+        $seat = Seatplan::whereBusesId($id)->first();
+        $val =  $seat->leftseatrow * $seat->rightseatrow;
+        if($val > 5){
+            $val1 = $val-1;
+        }else{
+            $val1 = $val;
+        }
+        $right = range($seat->firstletter, $seat->lastletter);
+        foreach($right as $item){
+            for($i=1;$i<=$val1;$i++){
+                $result = $item. + $i;
+                echo $result;
+            }
+        }
+
 
     }
 }

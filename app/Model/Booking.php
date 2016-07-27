@@ -39,7 +39,7 @@ class Booking extends Model
         }
         public function user()
         {
-            return $this->belongsTo('App\Model\User','insert_by');
+            return $this->belongsTo('App\Model\Agent','insert_by');
         }
         public function payment()
         {

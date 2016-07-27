@@ -35,6 +35,9 @@
 
     <script type="text/javascript" src=" {{  asset('assets/js/jquery-ui-1.9.2.min.js') }}"></script>
 
+    <link href="{{ asset('assets/datepicker/jquery.datetimepicker.css')}}" rel="stylesheet" media="screen">
+    <script type="text/javascript" src="{{ asset('assets/datepicker/jquery.datetimepicker.full.min.js')}}" charset="UTF-8"></script>
+
     <link href="{{ asset('assets/js/chosen.min.css') }}" rel="stylesheet" />
 
     <script src="{{ asset('assets/js/tinymce/tinymce.min.js') }}"></script>
