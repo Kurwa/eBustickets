@@ -167,6 +167,15 @@ Route::group(['prefix'=>'booking'], function () {
         'uses' => 'WebsiteController@contacts'
     ]);
 
-});
 
-Route::get('seats','TicketsController@seats');
+    /**
+     *  AJAX FUNCTIONS
+     */
+});
+Route::get('{slug}/{id}/seating-plan','WebsiteController@seats');
+
+
+Route::get('routes-taking','WebsiteController@routes_taking');
+Route::get('routes-location','WebsiteController@routes_location');
+
+

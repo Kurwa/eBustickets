@@ -1,5 +1,41 @@
 @extends('website.main')
 @section('main-count')
+    <script type="application/javascript">
+        $(document).ready(function() {
+            $('#datetimepicke').datetimepicker({
+                format: 'Y-m-d H:i',
+                minDate: "+1970/01/01",
+                allowTimes: ['8:00']
+            });
+            $("#routes").change(function(){
+                $("#data").val($('#routes').val()); //
+                $.ajax({
+                    type:"GET",
+                    url:"{{ url('routes-taking') }}",
+                    data:{
+                        routes_id : $('#routes').val(),
+                    },
+                    success:function(response){
+                        $(".initial_destination").html(response);
+                    }
+                });
+            });
+        });
+
+        function SelectLocation() {
+            $.ajax({
+                url:"{{ url('routes-location') }}",
+                data: {
+                    data : $('#data').val(),
+                    location : $('#location').val()
+                },
+                type: "GET",
+                success:function(data){
+                    $("#destination").html(data);
+                }
+            });
+        }
+       </script>
     <div class="main-cont">
         <div class="">
             <div class="wrapper-a-holder full-width-search">
@@ -126,67 +162,53 @@
                 <div class="modal-body">
                     <div class="col-sm-12">
                         {{--<form class="form-horizontal">--}}
-                        {!! Form::open(['class'=>'form-horizontal','method'=>'GET']) !!}
-                        <div class="col-sm-5">
-                            <select name="route" class="form-control" required>
-                                <option value="" selected>Select Route</option>
-                                @foreach($routes as $route)
-                                    <option value="{{ $route->id }}">{{ $route->initial }} to {{ $route->destination }}</option>
-                                @endforeach
-                            </select></div>
-                        <div class="col-sm-5">
-                            <input class="form-control date-inpt" id="datetimepicker" required name="dateoftravel" placeholder="Travel Date">
+                        {!! Form::open(['class'=>'form-vertical','method'=>'GET']) !!}
+                        <div id="dyn_3" class="panel">
+                            <div class="panel-body">
+                                <div class="">
+                                        <div class="form-group">
+                                            <div class="col-sm-5">
+                                                <select class="form-control"  required="required" name="routes" id="routes">
+                                                    <option value="" selected>Select Route</option>
+                                                    @foreach($routes as $route)
+                                                        <option value="{{ $route->id }}">{{ $route->initial }} to {{ $route->destination }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-5">
+                                                <div class="form-group">
+                                                    <input class="form-control date-inpt" id="datetimepicker" required name="dateoftravel" placeholder="Travel Date">
+                                                </div>
+                                        </div>
+                                    <input type="hidden" value="" id="data">
+                                    <div class="col-sm-5">
+                                         <div class="form-group">
+                                             <select class="form-control initial_destination" id="location" name="location" required="required" onchange="SelectLocation()">
+                                                 <option>--Select Location--</option>
+                                             </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-5">
+                                            <select class="form-control initial_destination"  required="required" id="destination" name="destination">
+                                                <option value="">--Select Destination--</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-primary">Search</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-sm-2">
-                            <button type="submit" class="btn btn-primary">Search</button>
-                        </div>
-                        {{--</div>--}}
-
-                        </form>
                     </div>
                 </div>
-                {{--<div class="modal-footer">--}}
-                {{--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>--}}
-                {{--<button type="button" class="btn btn-primary">Save changes</button>--}}
-                {{--</div>--}}
             </div>
         </div>
     </div>
-    <script type="application/javascript">
-        $(document).ready(function(){
-            $('#datetimepicke').datetimepicker({
-                format:'Y-m-d H:i',
-                minDate: "+1970/01/01",
-                allowTimes:['8:00']
-            });
-//            var d = new Date();
-//            var day = d.getDate();
-//            var logic = function(currentDateTime){
-//                // 'this' is jquery object datetimepicker
-//                if(currentDateTime.getDate() == day) {
-//                    this.setOptions({
-//                        minTime:+1,
-//                        dateFormat: 'dd-mm-yy',
-////                        maxTime:'19:00'
-//                    });
-//                }else
-//                    this.setOptions({
-//                        minTime:'8:00',
-//                        maxTime:'22:00'
-//                    });
-//            };
-//            $('#datetimepicker').datetimepicker({
-//                onChangeDateTime:logic,
-//                onShow:logic,
-//                minDate: 0,
-//                maxDate: '-1970-01-05',
-//                timepickerScrollbar:false,
-//                 allowTimes:[
-//                        '8:00','10:00'
-//                      ]
-//            });
-        });
-    </script>
 @stop
 
 <!-- Small Modal -->

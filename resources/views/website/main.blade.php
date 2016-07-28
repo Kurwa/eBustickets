@@ -25,7 +25,7 @@
         <div class="wrapper-padding">
             <div class="header-logo">
                 <span style="font-family: DejaVu Sans, 'trebuchet ms', verdana, sans-serif; font-weight: bold; opacity: 0.4;text-transform: uppercase">
-                    <h1 style="margin-top: 0px">{{ $company }}</h1>
+                    <h1 style="margin-top: 0px">{{ $company->name }}</h1>
                 </span>
             </div>
             <div class="header-right">

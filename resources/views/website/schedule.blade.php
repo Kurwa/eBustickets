@@ -1,19 +1,6 @@
 @extends('website.main')
 @section('main-count')
     <script type="application/javascript">
-        function SelectLocation () {
-            $.ajax({
-                url:"{{ url('tickets/routes-location') }}",
-                data: {
-                    data : $('#data').val(),
-                    location : $('#location').val()
-                },
-                type: "GET",
-                success:function(data){
-                    $("#destination").html(data);
-                }
-            });
-        }
         $(document).ready(function(){
         $('.cost').keyup(function (event) {
             // skip for arrow keys
@@ -37,6 +24,9 @@
                     Date : {{ strftime("%d -%b- %Y",strtotime($date)) }}
                 </div>
                 <div class="clear"></div>
+                <div class="page-title">Initial Point :  <span>{{ $initial }}</span></div>
+                <div class="clear"></div>
+                <div class="page-title">Destination Point :  <span style="color: #00005e">{{ $destination }}</span></div>
             </div>
                         <div class="sp-page-lb">
                             <div class="sp-page-p">
@@ -49,6 +39,7 @@
                                             <th class="per35">Total Seats</th>
                                             <th class="per15">Seats Taken</th>
                                             <th class="per15">Seats Available</th>
+                                            <th class="per15">Fares(Tsh)</th>
                                             <th class="per35">Action</th>
                                         </tr>
                                         </thead>
@@ -60,11 +51,12 @@
                                                     <td><span style="text-align:center">{{ $bus->buses->noofseats }}</span></td>
                                                     <td><span style="text-align:center">{{ $bus->taken }}</span></td>
                                                     <td><span style="text-align:center">{{ $bus->remain }}</span></td>
+                                                    <td><span style="text-align:center">{{ number_format($dest_money) }}</span></td>
                                                     <td>
                                                         <div>
                                                             <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#myLargeModal" onclick="Buses({{ $bus->id }})">
                                                                 <i class="fa  fa-bus"></i> book</button>
-                                                            <button class="btn btn-info btn-sm">check</button>
+                                                            <a href="{{ url($company->slug.'/'.$bus->id.'/seating-plan/') }}" class="btn btn-info btn-sm">check</a>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -123,33 +115,15 @@
                         </div>
                     </div>
                     <input type="hidden" value="{{ $route_id }}" id="data">
-                    <div class="form-group">
-                        <label class="col-lg-3 col-md-4 control-label" for="">Location</label>
-                        <div class="col-lg-9 col-md-8">
-                            <select class="form-control initial_destination" id="location" name="location" required="required" onchange="SelectLocation()">
-                                <option>--Select Location--</option>
-                                @foreach($routs as $route)
-                                    <option value="{{ $route->id }}">{{ $route->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-3 col-md-4 control-label" for="">Destination</label>
-                        <div class="col-lg-9 col-md-8">
-                            <select class="form-control initial_destination"  required="required" id="destination" name="destination">
-                                <option>--Select Destination--</option>
-                            </select>
-                        </div>
-                    </div>
-                    <!-- End .form-group  -->
+                    <input type="hidden" name="location" value="{{ \Illuminate\Support\Facades\Input::get('location') }}">
+                    <input type="hidden" name="destination" value="{{ \Illuminate\Support\Facades\Input::get('destination') }}">
                 </div>
                 <div class="col-md-6">
                     <!-- End .form-group  -->
                     <div class="form-group">
                         <label class="col-lg-3 col-md-4 control-label" for="">Seat No</label>
                         <div class="col-lg-9 col-md-8">
-                            <input type="text" class="form-control"  required="required" name="seatno" placeholder="Seat Number">
+                            <input type="text" class="form-control" readonly value="A1" required="required" name="seatno" placeholder="Seat Number">
                         </div>
                     </div>
                     <div class="form-group">
@@ -159,13 +133,12 @@
                                 (['' => 'Select Payment'] + $pays),
                                     null,
                                     ['class' => 'form-control','required','id'=>'pays']) !!}
-
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-3 col-md-4 control-label" for="">Payment Amount</label>
                         <div class="col-lg-9 col-md-8">
-                            <input type="text" class="form-control cost" value="" required="required" name="amount" placeholder="Payment Amount">
+                            <input type="text" class="form-control cost" value="{{ number_format($dest_money) }}" required="required" name="amount" placeholder="Payment Amount">
                         </div>
                     </div>
                 </div>
