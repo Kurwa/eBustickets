@@ -13,6 +13,7 @@ class Routesbuses extends Model
     protected $fillable = [
         'buses_id',
         'routes_id',
+        'status'
     ];
 
     public function routes()

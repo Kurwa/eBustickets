@@ -136,7 +136,7 @@ Route::group(['middleware' => 'auth','prefix'=>'tickets'], function () {
     Route::get('templates','TicketsController@templates');
     Route::post('templates','TicketsController@store');
 
-
+    Route::get('seats-plan','TicketsController@SeatCheking');
 
     /**
      *  AJAX FUNCTIONS
@@ -178,4 +178,9 @@ Route::get('{slug}/{id}/seating-plan','WebsiteController@seats');
 Route::get('routes-taking','WebsiteController@routes_taking');
 Route::get('routes-location','WebsiteController@routes_location');
 
+
+/**
+ *  Checking Plans
+ */
+Route::get('seating-plan','WebsiteController@SeatCheking');
 

@@ -14,6 +14,31 @@
         function Buses(argument){
             $("#buse_id").val(argument);
         }
+        function SeatingPlan(){
+            $.ajax({
+                type:"GET",
+                url:"{{ url('seating-plan') }}",
+                data:{
+                    buses : $("#buse_id").val(),
+                    date : "{{ \Illuminate\Support\Facades\Input::get('dateoftravel')}}",
+                },
+                success:function(response){
+                    if(response){
+                        $("#template").html(response);
+                    }
+                    else{
+                        $("#template").html();
+                    }
+                }
+            });
+        }
+        function CheckSeating(argument){
+            $("#seatno").val(argument);
+            $('#Modal').modal('toggle');
+        }
+        function Seating(argument){
+            alert(argument + 'Taken');
+        }
     </script>
 <div class="main-cont"  style="margin-top: -30px;margin-bottom: 10px;">
     <div class="body-wrapper">
@@ -44,6 +69,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
+                                        @if($buses->count())
                                         @foreach($buses as $bus)
                                             @if($bus->remain > 0)
                                                 <tr>
@@ -54,14 +80,21 @@
                                                     <td><span style="text-align:center">{{ number_format($dest_money) }}</span></td>
                                                     <td>
                                                         <div>
-                                                            <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#myLargeModal" onclick="Buses({{ $bus->id }})">
+                                                            <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#myLargeModal" onclick="Buses({{ $bus->buses->id }})">
                                                                 <i class="fa  fa-bus"></i> book</button>
-                                                            <a href="{{ url($company->slug.'/'.$bus->id.'/seating-plan/') }}" class="btn btn-info btn-sm">check</a>
+                                                            <a href="{{ url($company->slug.'/'.$bus->buses->id.'/seating-plan?route='.  \Illuminate\Support\Facades\Input::get('routes') .'&dateoftravel='. \Illuminate\Support\Facades\Input::get('dateoftravel')) }}" class="btn btn-info btn-sm">check</a>
                                                         </div>
                                                     </td>
                                                 </tr>
                                             @endif
                                         @endforeach
+                                        @else
+                                            <tr>
+                                                <td colspan="6">
+                                                    <span>No Bus Available for the selected Route and Day</span>
+                                                </td>
+                                            </tr>
+                                        @endif
                                         </tbody>
                                     </table>
                                 </div>
@@ -76,7 +109,7 @@
 
 </div>
 <!-- Lare Modal -->
-<div class="modal fade" id="myLargeModal" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="myLargeModal" data-backdrop="static"  tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -96,11 +129,10 @@
                     <div class="form-group">
                         <label class="col-lg-3 col-md-4 control-label" for="">First Name</label>
                         <div class="col-lg-9 col-md-8">
-                            <input type="text" class="form-control" name="first_name"  value="" placeholder="First Name">
+                            <input type="text" class="form-control" name="first_name" required value="" placeholder="First Name">
                         </div>
                     </div>
                     {{--</div>--}}
-
                     <!-- End .form-group  -->
                     <div class="form-group">
                         <label class="col-lg-3 col-md-4 control-label" for="">Last Name</label>
@@ -111,7 +143,7 @@
                     <div class="form-group">
                         <label class="col-lg-3 col-md-4 control-label" for="">Phone Number</label>
                         <div class="col-lg-9 col-md-8">
-                            <input type="text" class="form-control" name="phone_number" value="" placeholder="Phone Number">
+                            <input type="text" class="form-control" required name="phone_number" value="" placeholder="Phone Number">
                         </div>
                     </div>
                     <input type="hidden" value="{{ $route_id }}" id="data">
@@ -123,7 +155,7 @@
                     <div class="form-group">
                         <label class="col-lg-3 col-md-4 control-label" for="">Seat No</label>
                         <div class="col-lg-9 col-md-8">
-                            <input type="text" class="form-control" readonly value="A1" required="required" name="seatno" placeholder="Seat Number">
+                            <input type="text" class="form-control" data-toggle="modal" data-target="#Modal" readonly value="" id="seatno" required name="seatno" placeholder="Seat Number" onclick="SeatingPlan()">
                         </div>
                     </div>
                     <div class="form-group">
@@ -152,5 +184,24 @@
     </div>
 </div>
 <!-- /.modal -->
-
+    <!-- Lare Modal -->
+    <div class="modal fade" id="Modal" data-backdrop="static"  tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Seating Plan</h4>
+                </div>
+                <div class="modal-body" id="template">
+                </div>
+                {{--<div class="modal-footer">--}}
+                    {{--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>--}}
+                    {{--<button type="button" class="btn btn-primary">Save changes</button>--}}
+                {{--</div>--}}
+            </div>
+        </div>
+    </div>
+    <!-- /.modal -->
 @stop

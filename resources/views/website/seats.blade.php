@@ -1,13 +1,24 @@
 @extends('website.main')
 @section('main-count')
     <style type="text/css">
-        .SeatCell{
+        .seating{
             background: url("{{ asset('assets/img/seatplan.png')  }}" ) -97px 0px no-repeat;
             width: 50px;
             height: 43px;
-            background-color: #cc006a;
+            background-color: #cbd0ce;
+        }
+        .selectedSeat{
+            background-color: green;
         }
     </style>
+    <script type="application/javascript">
+        function CheckSeating(argument){
+            alert(argument);
+        }
+        function Seating(argument){
+            alert(argument + 'Taken');
+        }
+    </script>
     <div class="main-cont">
         <div class="body-wrapper">
             <div class="wrapper-padding">
@@ -17,49 +28,103 @@
                             <div class="sp-page-lb">
                                 <div class="sp-page-p">
                                     <div class="booking-left">
-                                        {{--<h2></h2>--}}
                                         <div class="h-liked-lbl">Seating Plan</div>
-                                        <table class="SeatPlanTable table" cellpadding="0" cellspacing="0">
-                                            <thead>
-                                            <tr>
-                                                <td class="SeatRowNumber SeatPlanWidthMarker"></td>
+                                        <hr>
+                                        <div class="col-sm-10 col-xs-10 col-sm-offset-2">
+                                            <div class="col-sm-4 col-xs-4">
+                                                <div class="col-sm-12 col-xs-12">
+                                                    <div id="driver">
+                                                    </div>
+                                                </div>
                                                 @foreach($right as $i => $item)
-                                                    @if($seat->leftseatrow == 2)
-                                                        <td width="50" height="43">
-                                                            <span class="noback ">{{ $item }}</span>
-                                                        </td>
-                                                    @else
-                                                        <td width="50" height="43">
-                                                            <span class="noback ">{{ $item }}</span>
-                                                        </td>
-                                                    @endif
+                                                    <div class="col-sm-12 col-xs-12">
+                                                        @if($seat->leftseatrow == 2)
+                                                            <div class="col-sm-6 col-xs-6">
+                                                                <?php
+                                                                $check2 = in_array( $item . 1 , $seating) ? 'selectedSeat' : '';
+                                                                $actions = ($check2 != 'selectedSeat') ? 'onclick=CheckSeating(\''.$item . 1 .'\')': 'onclick=Seating(\''.$item . 1 .'\')';
+                                                                ?>
+                                                                <div class="seating {{ $check2 }}" {{ $actions }}>
+                                                                    <strong>{{ $item }}1</strong>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6 col-xs-6">
+                                                                <?php $check2 = in_array( $item . 2 , $seating) ? 'selectedSeat' : '';
+                                                                $actions = ($check2 != 'selectedSeat') ? 'onclick=CheckSeating(\''.$item . 2 .'\')': 'onclick=Seating(\''.$item . 2 .'\')';
+                                                                ?>
+                                                                <div class="seating {{ $check2 }}"  {{ $actions }}>
+                                                                    <strong>{{ $item }}2</strong>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-2 col-xs-2"><div class=""></div></div>
+                                                        @else
+                                                            <div class="col-sm-6 col-xs-6">
+                                                                <?php $check2 = in_array( $item . 1 , $seating) ? 'selectedSeat' : '';
+                                                                $actions = ($check2 != 'selectedSeat') ? 'onclick=CheckSeating(\''.$item . 1 .'\')': 'onclick=Seating(\''.$item . 1 .'\')';
+                                                                ?>
+                                                                <div class="seating {{ $check2 }}" {{ $actions }}>
+                                                                    <strong>{{ $item }}1</strong>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-2 col-xs-2"><div class=""></div></div>
+                                                        @endif
+                                                    </div>
                                                 @endforeach
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr class="headRow">
-                                                <td class="SeatRowNumber SeatPlanWidthMarker"></td>
-                                                <td class="SeatCell"><span class="noback ">A</span></td>
-                                                <td class="SeatCell"><span class="noback ">B</span></td>
-                                                <td class="SeatCell"><span class="noback ">C</span></td>
-                                                <td class=""><span class="noback "></span></td>
-                                                <td class="SeatCell"><span class="noback ">D</span></td>
-                                                <td class="SeatCell"><span class="noback ">E</span></td>
-                                                <td class="SeatCell"><span class="noback ">F</span></td>
-                                                <td class=" SeatPlanWidthMarkerRight"></td>
-                                            </tr>
-                                            <tr class="headRow">
-                                                <td class="SeatRowNumber SeatPlanWidthMarker"></td>
-                                                <td class="SeatCell"><span class="selectedSeat vars_active ">3A</span></td>
-                                                <td class="SeatCell"><span class="Seat freeSeat ">3B</span></td>
-                                                <td class="SeatCell"><span class="Seat freeSeat ">3C</span></td>
-                                                <td class="SeatCell"><span class="Seat freeSeat ">3D</span></td>
-                                                <td class="SeatCell"><span class="Seat freeSeat ">3E</span></td>
-                                                <td class="SeatCell"><span class="Seat freeSeat ">3F</span></td>
-                                                <td class="SeatCell"><span class="Seat freeSeat ">3G</span></td>
-                                                <td class=" SeatPlanWidthMarkerRight"></td>
-                                            </tr>
-                                            </tbody>
+                                            </div>
+                                            <div class="col-sm-6 col-xs-6">
+                                                {{--<br/><br/>--}}
+                                                @foreach($right as $i => $item)
+                                                    {{--*/ $i = 3 /*--}}
+                                                    <div class="col-sm-12 col-xs-12">
+                                                        @if($seat->rightseatrow == 3)
+                                                            <div class="col-sm-4">
+                                                                <?php $check2 = in_array( $item . 3 , $seating) ? 'selectedSeat' : '';
+                                                                $actions = ($check2 != 'selectedSeat') ? 'onclick=CheckSeating(\''.$item . 3 .'\')': 'onclick=Seating(\''.$item . 3 .'\')';
+                                                                ?>
+                                                                <div class="seating {{ $check2 }}"  {{$actions }}>
+                                                                    <strong>{{ $item }}3</strong>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <?php
+                                                                $check2 = in_array( $item . 4 , $seating) ? 'selectedSeat' : '';
+                                                                $actions = ($check2 != 'selectedSeat') ? 'onclick=CheckSeating(\''.$item . 4 .'\')': 'onclick=Seating(\''.$item . 4 .'\')';
+                                                                ?>
+
+                                                                <div class="seating {{ $check2 }}" {{ $actions }}>
+                                                                    <strong>{{ $item }}4</strong>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <?php $check2 = in_array( $item . 5 , $seating) ? 'selectedSeat' : '';
+                                                                $actions = ($check2 != 'selectedSeat') ? 'onclick=CheckSeating(\''.$item . 5 .'\')': 'onclick=Seating(\''.$item . 5 .'\')';
+                                                                ?>
+                                                                <div class="seating {{ $check2 }}"  {{ $actions }}>
+                                                                    <strong>{{ $item }}5</strong>
+                                                                </div>
+                                                            </div>
+                                                        @else
+                                                            <div class="col-sm-4">
+                                                                <?php $check2 = in_array( $item . 3 , $seating) ? 'selectedSeat' : '';?>
+                                                                <div class="seating {{ $check2 }}"  {{ $actions }}>
+                                                                    <strong>{{ $item }}3</strong>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <?php $check2 = in_array( $item . 4 , $seating) ? 'selectedSeat' : '';?>
+                                                                <div class="seating {{ $check2 }}"  {{ $actions }}>
+                                                                    <strong>{{ $item }}4</strong>
+                                                                </div>
+                                                            </div>
+                                                        @endif
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                        {{--<hr>--}}
+                                        <table class="table" cellpadding="0" cellspacing="0">
+                                            {{--<thead>--}}
+                                            {{--</thead>--}}
                                         </table>
                                     </div>
                                 </div>
@@ -68,17 +133,17 @@
                     </div>
                     <div class="sp-page-r">
                         <div class="h-reasons">
-                            <div class="h-liked-lbl">fhalflahfla</div>
+                            <div class="h-liked-lbl">Descriptions</div>
                             <div class="h-reasons-row">
                                 <table class="table">
                                     <tbody>
                                     <tr>
-                                        <td class="Seat selectedSeat vars_active"></td>
-                                        <td class="NoSeat">Taken Seat</td>
+                                        <td class="Seat seating selectedSeat vars_active"></td>
+                                        <td class="">Taken Seat</td>
                                     </tr>
                                     <tr>
-                                        <td class="Seat freeSeat"></td>
-                                        <td class="NoSeat">Siti za Bure</td>
+                                        <td class="Seat seating freeSeat"></td>
+                                        <td class="">Empty Seats</td>
                                     </tr>
                                     </tbody>
                                 </table>

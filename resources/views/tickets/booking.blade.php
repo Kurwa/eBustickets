@@ -36,7 +36,7 @@
                     }
                 });
             });
-        })
+        });
 
         function SelectLocation () {
             $.ajax({
@@ -69,7 +69,38 @@
                 });
             });
         });
-
+        function SeatingPlan(){
+            $.ajax({
+                type:"GET",
+                url:"{{ url('tickets/seats-plan') }}",
+                data:{
+                    buses : $("#data1").val(),
+                    date : $("#travelday").val(),
+                    route: $("#data2").val()
+                },
+                success:function(response){
+                    if(response){
+                        $("#template").html(response);
+                    }
+                    else{
+                        $("#template").html();
+                    }
+                }
+            });
+        }
+        function BusesCheck(){
+            $("#data1").val($('#busesid').val());
+        }
+        function RouteCheck(){
+            $("#data2").val($('#routes').val());
+        }
+        function CheckSeating(argument){
+            $("#seatno").val(argument);
+            $('#Modal').modal('toggle');
+        }
+        function Seating(argument){
+            alert(argument + 'Taken');
+        }
     </script>
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -181,6 +212,8 @@
                 </div>
                 {!! Form::open(array('class'=>'form-horizontal', 'files'=>true ,'autocomplete' => 'off')) !!}
                 <div class="modal-body" id="">
+                    <input type="hidden" value="" id="data1">
+                    <input type="hidden" value="" id="data2">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="col-lg-3 col-md-4 control-label" for="">First Name</label>
@@ -207,7 +240,7 @@
                         <div class="form-group">
                             <label class="col-lg-3 col-md-4 control-label" for="">Route</label>
                             <div class="col-lg-9 col-md-8">
-                              <select class="form-control"  required="required" name="routes" id="routes">
+                              <select class="form-control"  required="required" name="routes" id="routes" onchange="RouteCheck()">
                                   <option>--Select Route--</option>
                                   @foreach($routes as $route)
                                       <option value="{{ $route->id }}">{{ $route->initial }} - {{ $route->destination }}</option>
@@ -248,14 +281,14 @@
                                  {!! Form::select('buses',
                                      (['' => 'Select Number'] + $buses),
                                          null,
-                                         ['class' => 'form-control','required','id'=>'type']) !!}
+                                         ['class' => 'form-control','required','id'=>'busesid','onchange'=>'BusesCheck()']) !!}
                           </div>
                         </div>
                         <!-- End .form-group  -->
                         <div class="form-group">
                             <label class="col-lg-3 col-md-4 control-label" for="">Seat No</label>
                             <div class="col-lg-9 col-md-8">
-                                <input type="text" class="form-control"  required="required" name="seatno" placeholder="Seat Number">
+                                <input type="text" class="form-control" data-toggle="modal" data-target="#Modal" readonly value="" id="seatno" required name="seatno" placeholder="Seat Number" onclick="SeatingPlan()">
                             </div>
                         </div>
                         <div class="form-group">
@@ -286,4 +319,22 @@
         </div>
     </div>
     <!-- /.modal -->
+    <div class="modal fade" id="Modal" data-backdrop="static"  tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Seating Plan</h4>
+                </div>
+                <div class="modal-body" id="template">
+                </div>
+                {{--<div class="modal-footer">--}}
+                {{--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>--}}
+                {{--<button type="button" class="btn btn-primary">Save changes</button>--}}
+                {{--</div>--}}
+            </div>
+        </div>
+    </div>
 @endsection

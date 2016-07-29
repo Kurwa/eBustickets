@@ -38,8 +38,8 @@ class WebsiteController extends Controller
         view()->share('slug',$bus);
         if($route_id != ""  && $date != "" && $destiny != ""  && $location != "" ){
             $id = Companies::whereSlug($bus)->first()->id;
-            $buses = Routesbuses::with(['routes','buses'])->get();
-
+            $buses = Routesbuses::with(['routes','buses'])->whereRoutesId($route_id)->whereStatus(1)->get();
+//        return $buses;
             foreach($buses as $bus){
                 $bus->taken = Booking::whereCompaniesId($id)
                             ->whereDateoftravel($date)
@@ -47,6 +47,7 @@ class WebsiteController extends Controller
                             ->whereBusesId($bus->id)->get()->count();
                             $bus->remain = $bus->buses->noofseats - $bus->taken;
                 }
+
             $route = Route::whereId($route_id)->first();
             $routs = Routespoint::whereRoutesId($route_id)->get();
             $pays = DB::table('payments')->lists('name','id');
@@ -131,6 +132,8 @@ class WebsiteController extends Controller
             'companies_id' => Input::get('company'),
         ];
         $rules = [
+            'firstname' => 'required',
+            'phonenumber' => 'required',
             'routes_id' => 'required',
             'initial' => 'required',
             'final' => 'required',
@@ -178,13 +181,38 @@ class WebsiteController extends Controller
 
     public function seats($bus , $id)
     {
+        $routes = Input::get('route');
+        $date = Input::get('dateoftravel');
+        $seating = Booking::whereBusesId($id)
+                            ->whereDateoftravel($date)
+                            ->whereRoutesId($routes)
+                            ->pluck('seat_number')
+                            ->toArray();
         $company = Companies::whereSlug($bus)->first();
         view()->share('company',$company);
         view()->share('slug','ems_buses');
         $seat = Seatplan::whereBusesId($id)->first();
         $right = range($seat->firstletter, $seat->lastletter);
-//return $seat;
-       return view('website.seats',compact('right','seat'));
+       return view('website.seats',compact('right','seat','seating'));
+    }
+
+    /**
+     *    Bus Checking
+     */
+    public function SeatCheking()
+    {
+        $id = Input::get('buses');
+        $date = Input::get('date');
+        $routes = Input::get('routes');
+        $seating = Booking::whereBusesId($id)
+            ->whereDateoftravel($date)
+            ->whereRoutesId($routes)
+            ->pluck('seat_number')
+            ->toArray();
+        $seat = Seatplan::whereBusesId($id)->first();
+        $right = range($seat->firstletter, $seat->lastletter);
+        $output = view('website.seating-plan',compact('seat','right','seating'));
+        return $output;
     }
 
 }

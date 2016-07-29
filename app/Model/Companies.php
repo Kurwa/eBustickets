@@ -17,4 +17,5 @@ class Companies extends Model
         'ownername',
         'ownerphone',
     ];
+
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Buse;
 use App\Model\Companies;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Illuminate\Http\Request;
@@ -23,6 +24,9 @@ class CustomerController extends Controller
     {
         if(Sentinel::inRole('super')){
             $companies = Companies::all();
+            foreach($companies as $company){
+                $company->total = Buse::whereCompaniesId($company->id)->get()->count();
+            }
             return view('customers.index',compact('companies'));
         }else{
             return view('permission-denied');

@@ -12,6 +12,15 @@
     Customer Lists
 @stop
 @section('contents')
+    <script type="application/javascript">
+     $(document).ready(function(){
+        $('#slug').keydown(function() {
+            var str = $(this).val();
+            var str = str.replace(/\s/g,'');
+            $(this).val(str);
+         });
+     });
+    </script>
     <div id="dyn_7" class="panel panel-lime plain">
         <div class="panel-heading">
             <h4 class="panel-title"><i class="fa fa-search"></i>  View Customers List</h4>
@@ -30,7 +39,6 @@
                     <th>Telephone</th>
                     <th>Email</th>
                     <th>No of Buses</th>
-                    <th>Status</th>
                     <th>Action</th>
                 </tr>
                 </thead>
@@ -44,8 +52,7 @@
                         <td>{{ $company->address }}</td>
                         <td>{{ $company->telephone }}</td>
                         <td>{{ $company->email }}</td>
-                        <td></td>
-                        <td></td>
+                        <td>{{ $company->total }}</td>
                         <td>
                             <div class="btn-group">
                                 <button class="btn btn-default btn-xs"><i class="fa fa-eye"></i> view</button>
@@ -82,7 +89,7 @@
                         <div class="form-group">
                             <label class="col-lg-3 col-md-4 control-label" for="">Slug</label>
                             <div class="col-lg-9 col-md-8">
-                                <input type="text" class="form-control" placeholder="Slug" name="slug">
+                                <input type="text" class="form-control" id="slug" style="text-transform: lowercase" placeholder="Slug" name="slug">
                             </div>
                         </div>
                     <!-- End .form-group  -->

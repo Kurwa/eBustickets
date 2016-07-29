@@ -40,26 +40,6 @@
         })
 
     </script>
-    <style type="text/css">
-        #driver{
-            background: url("{{ asset('assets/img/seating.jpg')  }}" ) -516px -71px no-repeat;
-            /*background-color: yellow;*/
-            width: 54px;
-            height: 40px;
-            transform: rotate(270deg);
-            margin-left: 10px;
-            opacity: 0.9;
-        }
-        .seating{
-            background: url("{{ asset('assets/img/seating.png')  }}" ) -777px -70px no-repeat;
-            width: 71px;
-            height: 89px;
-            color: red;
-            transform: rotate(270deg);
-            margin-left: 10px;
-            margin-top: 30px;
-        }
-    </style>
     <div id="dyn_7" class="panel panel-lime plain">
         <div class="panel-body">
         <div class="row">

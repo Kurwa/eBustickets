@@ -254,7 +254,24 @@ class TicketsController extends Controller
                 echo $result;
             }
         }
+    }
 
-
+    /**
+     *    Bus Checking
+     */
+    public function SeatCheking()
+    {
+        $id = Input::get('buses');
+        $date = Input::get('date');
+        $routes = Input::get('route');
+        $seating = Booking::whereBusesId($id)
+            ->whereDateoftravel($date)
+            ->whereRoutesId($routes)
+            ->pluck('seat_number')
+            ->toArray();
+        $seat = Seatplan::whereBusesId($id)->first();
+        $right = range($seat->firstletter, $seat->lastletter);
+        $output = view('website.seating-plan',compact('seat','right','seating'));
+        return $output;
     }
 }

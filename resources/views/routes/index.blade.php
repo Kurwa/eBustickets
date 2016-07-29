@@ -61,7 +61,7 @@
         </div>
     </div>
     <!-- Lare Modal -->
-    <div class="modal fade" id="myLargeModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="myLargeModal" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -78,11 +78,15 @@
                                 <input type="text" class="form-control" placeholder="Route Start" name="initial" required>
                             </div>
                         </div>
+                        <div id="admit_docs_tbl"></div>
                         <!-- End .form-group  -->
                         <div class="form-group">
                             <label class="col-lg-3 col-md-4 control-label" for="">Route Destination</label>
-                            <div class="col-lg-9 col-md-8">
-                                <input type="text" class="form-control" placeholder="Route Destinatin" name="destination" required>
+                            <div class="col-sm-6 col-md-6">
+                                <input type="text" class="form-control" style="font-family: 'DejaVu Sans Mono'" placeholder="Route Destination" name="destination" required>
+                            </div>
+                            <div class="col-sm-3 col-md-3">
+                                <input type="text" class="form-control cost" style="font-family: 'DejaVu Sans Mono'" placeholder="Fares" name="destination_fare" required >
                             </div>
                         </div>
                         <!-- End .form-group  -->
@@ -93,8 +97,6 @@
                             </div>
                             <a id="recopy-add" class="add glyphicon glyphicon-plus-sign text-success" href="#" rel=".test" style="font-size:24px;text-decoration: none"></a>
                         </div>
-                    <div id="admit_docs_tbl"></div>
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -108,8 +110,11 @@
         <div id="amended">
             <div class="form-group">
                 <label class="col-lg-3 col-md-4 control-label" for="">Route Points</label>
-                <div class="col-sm-8 col-md-8">
+                <div class="col-sm-5 col-md-5">
                     <input type="text" class="form-control" style="font-family: 'DejaVu Sans Mono'" placeholder="Route Points" name="points[]" required>
+                </div>
+                <div class="col-sm-3 col-md-3">
+                    <input type="text" class="form-control cost" style="font-family: 'DejaVu Sans Mono'" placeholder="Fares" name="fares[]" required >
                 </div>
                 <div class="col-sm-1">
                     <a class="fa fa-minus-circle fa-2x" href="#" style="text-decoration: none" onclick="$(this).parent().parent().remove(); return false;"></a>
@@ -119,9 +124,22 @@
     </div>
     <!-- /.modal -->
     <script type="application/javascript">
+        function message(){
+            $(document).ready(function(){
+                $('.cost').keyup(function (event) {
+                    // skip for arrow keys
+                    if (event.which >= 37 && event.which <= 40) return;
+                    // format number
+                    $(this).val(function (index, value) {
+                        return value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    });
+                });
+            });
+        }
         $("#recopy-add").on('click',function(){
             var response = $('#amended').html();
             $('#admit_docs_tbl').append(response).slideDown('slow');
+            message();
         });
     </script>
 @endsection

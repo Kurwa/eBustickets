@@ -4,7 +4,6 @@
             <div id="driver">
             </div>
         </div>
-
         @foreach($right as $i => $item)
             <div class="col-sm-12">
                 @if($seat->leftseatrow == 2)
