@@ -64,7 +64,7 @@
                     <button type="button" class="close" data-dismiss="modal">
                         <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
                     </button>
-                    <h4 class="modal-title" id="myModalLabel">Bus</h4>
+                    <h4 class="modal-title" id="myModalLabel">New Bus Registration</h4>
                 </div>
                 {!! Form::open(array('class'=>'form-horizontal', 'files'=>true ,'autocomplete' => 'off')) !!}
                 <div class="modal-body" id="">
@@ -154,13 +154,13 @@
                             <div class="form-group">
                             <label for="" class="col-sm-8 control-label">Left Seat Column</label>
                             <div class="col-sm-4">
-                                <input class="form-control" name="leftseatrow" required placeholder="2" type="number">
+                                <input class="form-control" name="leftseatrow" required placeholder="2" type="number" maxlength="1">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="" class="col-sm-8 control-label">Right Seat Column</label>
                             <div class="col-sm-4">
-                                <input class="form-control" name="rightseatrow" required placeholder="3" type="number">
+                                <input class="form-control" name="rightseatrow" required placeholder="3" type="number" maxlength="1">
                             </div>
                         </div>
                         </div>

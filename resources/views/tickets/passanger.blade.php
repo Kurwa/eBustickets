@@ -1,15 +1,15 @@
 @extends('layouts.main')
 @section('heading')
-    Tickets Lists
+    Passengers Lists
 @endsection
 @section('title')
-    Tickets Lists
+    Passengers Lists
 @stop
 @section('second')
-    Tickets
+    Passengers
 @stop
 @section('last')
-    Tickets Lists
+    Passengers Lists
 @stop
 @section('contents')
     <script type="application/javascript">
@@ -65,11 +65,8 @@
     </div>
     <div id="dyn_7" class="panel panel-lime plain">
         <div class="panel-heading">
-            <h4 class="panel-title"><i class="fa fa-search"></i>  View Tickets List</h4>
+            <h4 class="panel-title"><i class="fa fa-search"></i>  View Passengers List</h4>
             <div class="panel-controls panel-controls-right">
-                {{--<button class="btn btn-info mr5 mb10 btn-sm" style="margin-top: 10px"--}}
-                        {{--data-toggle="modal" data-target="#myLargeModal" onclick="Moneyformat()">--}}
-                    {{--<i class="fa fa-plus"></i> Add</button>--}}
             </div>
         </div>
         <div class="panel-body">
@@ -89,17 +86,17 @@
                 </thead>
                 <tbody>
                 {{--*/ $i = 0 /*--}}
-                @foreach($tickets as $ticket)
+                @foreach($passengers as $passenger)
                     {{--*/ $i ++ /*--}}
                     <tr>
                         <td>{{ $i }}</td>
-                        <td><a href="#"> {{ $ticket->booking->firstname }} {{ $ticket->booking->lastname }}</a></td>
-                        <td><a href="#">{{ $ticket->tickets_number }}</a> </td>
-                        <td><a href="#">{{ $ticket->booking->seat_number }}</a></td>
-                        <td><a href="#"> {{ $ticket->booking->buses->bus_number }}</a> </td>
-                        <td>{{ $ticket->booking->phonenumber }}</td>
-                        <td style="text-align: right;">{{ number_format($ticket->booking->amount) }}</td>
-                        <td>{{ strftime('%d -%b- %Y',strtotime($ticket->booking->dateoftravel)) }}</td>
+                        <td><a href="#"> {{ $passenger->booking->firstname }} {{ $passenger->booking->lastname }}</a></td>
+                        <td><a href="#">{{ $passenger->tickets_number }}</a> </td>
+                        <td><a href="#">{{ $passenger->booking->seat_number }}</a></td>
+                        <td><a href="#"> {{ $passenger->booking->buses->bus_number }}</a> </td>
+                        <td>{{ $passenger->booking->phonenumber }}</td>
+                        <td style="text-align: right;">{{ number_format($passenger->booking->amount) }}</td>
+                        <td>{{ strftime('%d -%b- %Y',strtotime($passenger->booking->dateoftravel)) }}</td>
                     </tr>
                 @endforeach
                 </tbody>

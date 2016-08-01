@@ -174,7 +174,6 @@ Route::group(['prefix'=>'booking'], function () {
 });
 Route::get('{slug}/{id}/seating-plan','WebsiteController@seats');
 
-
 Route::get('routes-taking','WebsiteController@routes_taking');
 Route::get('routes-location','WebsiteController@routes_location');
 
@@ -184,3 +183,11 @@ Route::get('routes-location','WebsiteController@routes_location');
  */
 Route::get('seating-plan','WebsiteController@SeatCheking');
 
+
+    /**
+     *  BUS WEBSITE BOOKING
+     * */
+Route::group(['middleware'=>'auth'], function () {
+    Route::get('passengers','TicketsController@passengers');
+    Route::get('agents','ConfigurationController@agents');
+});

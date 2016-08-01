@@ -41,4 +41,6 @@
     <link href="{{ asset('assets/js/chosen.min.css') }}" rel="stylesheet" />
 
     <script src="{{ asset('assets/js/tinymce/tinymce.min.js') }}"></script>
+
+    <script type="text/javascript" src=" {{  asset('assets/js/jscolor.min.js') }}"></script>
 </head>

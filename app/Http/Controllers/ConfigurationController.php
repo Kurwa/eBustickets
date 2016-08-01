@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Location;
 use App\Model\Role;
 use App\Model\User;
+use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Illuminate\Http\Request;
 
 use Illuminate\Database\QueryException;
 use App\Http\Requests;
 use DB;
-use Validator, Input, Redirect ,View ,Session,Activation,Sentinel;
+use Validator, Input, Redirect ,View ,Session,Activation;
 
 
 
@@ -39,9 +41,9 @@ class ConfigurationController extends AuthorizedController
         {
             $roles =  DB::table('roles')->whereNotIn('id',[1,2])->lists('name', 'id');
             $company =  DB::table('companies')->whereId(Sentinel::getUser()->companies_id)->lists('name', 'id');
-            $users = User::whereNotIn('username',['super','admin'])
+            $users = User::whereNotIn('username',['super'])
                             ->whereCompaniesId(Sentinel::getUser()->companies_id)
-                            ->with(['company','roles'])
+                            ->with(['company','roles.role'])
                             ->get();
 //            return $users;
             return view('configurations.users.index',compact('roles','company','users'));
@@ -51,7 +53,8 @@ class ConfigurationController extends AuthorizedController
         }
         $roles =  DB::table('roles')->whereNotIn('id',[1])->lists('name', 'id');
         $company =  DB::table('companies')->lists('name', 'id');
-        $users = User::with(['company','roles'])
+        $users = User::whereNotIn('username',['super'])
+                        ->with(['company','roles.role'])
                         ->get();
         return view('configurations.users.index',compact('roles','company','users'));
     }
@@ -74,37 +77,45 @@ class ConfigurationController extends AuthorizedController
     {
 
         $input = [
-            '_token'         => Input::get('_token'),
-            'email'          => Input::get('email'),
-            'username'       => Input::get('username'),
-            'password'       => Input::get('password'),
-            'first_name'      => Input::get('firstname'),
-            'last_name'       => Input::get('lastname'),
+            '_token' => Input::get('_token'),
+            'email' => Input::get('email'),
+            'username' => Input::get('username'),
+            'password' => Input::get('password'),
+            'first_name' => Input::get('firstname'),
+            'last_name' => Input::get('lastname'),
+            'phone_number' => Input::get('phone_number'),
             'companies_id' => Input::get('company'),
         ];
-            $rules = [
-            'email'            => 'required|email|unique:users',
-            'username'         => 'required|unique:users',
-            'password'         => 'required',
+        $rules = [
+            'email' => 'required|email|unique:users',
+            'username' => 'required|unique:users',
+            'password' => 'required',
         ];
         $validator = Validator::make($input, $rules);
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             return Redirect::back()
                 ->withInput()
                 ->withErrors($validator);
         }
-
-        if ($user = Sentinel::registerAndActivate($input))
-        {
+        if ($user = Sentinel::registerAndActivate($input)) {
             $role_id = Input::get('role');
             $role = Sentinel::findRoleById($role_id);
             $role->users()->attach($user);
+            if (Sentinel::inRole('admin')) {
+                $location = [
+                    'users_id' => $user->id,
+                    'locations' => Input::get('location')
+                ];
+                Location::FirstOrCreate($location);
+            }
+            Session::flash('success', 'Account successfully created');
+            return Redirect::to('configurations/users');
+        }
+    }
+//        return Redirect::to('configurations/register')
+//            ->withInput()
+//            ->withErrors('Failed to register.');
 
-//            if (Input::get('allowpermission') == 1) {
-//                $inpper = Input::get('permision');
-//                $result = array();
-//                $key = 0;
 //                foreach ($inpper as $permision) {
 //                    $create = Input::get("$permision".'create');
 //                    $delete = Input::get("$permision".'delete');
@@ -125,14 +136,6 @@ class ConfigurationController extends AuthorizedController
 //                return Redirect::to('configurations/users');
 //            }
 
-            Session::flash('success','Account successfully created');
-            return Redirect::to('configurations/users');
-        }
-//        return Redirect::to('configurations/register')
-//            ->withInput()
-//            ->withErrors('Failed to register.');
-
-    }
 
     /**
      * Display the specified resource.
@@ -231,7 +234,7 @@ class ConfigurationController extends AuthorizedController
     }
 
     /*
-     *
+     *   Self Registration
      * */
     public function registersuper()
     {
@@ -247,5 +250,17 @@ class ConfigurationController extends AuthorizedController
         $role_id = 1;
         $role = Sentinel::findRoleById($role_id);
         $role->users()->attach($user);
+    }
+    /**
+     *  AGENTS
+     */
+    public function agents()
+    {
+        $agents = Location::with('agents')
+            ->whereHas('agents', function ($query) {
+                $query->whereCompaniesId(Sentinel::getUser()->companies_id);
+            })->orderBy('created_at', 'DESC')
+            ->get();
+        return view('tickets.agents',compact('agents'));
     }
 }

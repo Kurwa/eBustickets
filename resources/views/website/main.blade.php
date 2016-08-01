@@ -1,4 +1,13 @@
 @include('website.header')
+<style type="text/css">
+    .header-a {
+        --main-bgcolor: {{ $data }};
+    }
+    .header-a {
+        height:40px; width:100%;
+        background-color: var(--main-bgcolor);
+    }
+</style>
 <header id="top">
     <div class="header-a">
         <div class="wrapper-padding">
@@ -13,19 +22,19 @@
     </div>
     <div class="header-b">
         <!-- // mobile menu // -->
-        <div class="mobile-menu">
-        <nav>
-        <ul>
-        <li><a class="has-child" href="#">HOME</a> </li>
-        <li><a class="has-child" href="#">Hotels</a></li>
-        </ul>
-        </nav>
-        </div>
+        {{--<div class="mobile-menu">--}}
+        {{--<nav>--}}
+        {{--<ul>--}}
+        {{--<li><a class="has-child" href="#">HOME</a> </li>--}}
+        {{--<li><a class="has-child" href="#">Hotels</a></li>--}}
+        {{--</ul>--}}
+        {{--</nav>--}}
+        {{--</div>--}}
         <!-- \\ mobile menu \\ -->
         <div class="wrapper-padding">
             <div class="header-logo">
                 <span style="font-family: DejaVu Sans, 'trebuchet ms', verdana, sans-serif; font-weight: bold; opacity: 0.4;text-transform: uppercase">
-                    <h1 style="margin-top: 0px">{{ $company->name }}</h1>
+                    <h1 style="margin-top: 0px;font-size: 2.5vw;">{{ $company->name }}</h1>
                 </span>
             </div>
             <div class="header-right">

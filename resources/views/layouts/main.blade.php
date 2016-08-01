@@ -4,7 +4,7 @@
 <div id="header" class="page-navbar">
     <!-- .navbar-brand -->
     <a href="#" class="navbar-brand hidden-xs hidden-sm">
-        <img src="{{ asset('assets/img/logo.png') }}" width="191" height="48" class="logo hidden-xs" alt="MakGroup Logo">
+        <img src="{{ asset('assets/img/logo1.png') }}" width="191" height="48" class="logo hidden-xs" alt="MakGroup Logo">
         {{--<img src="{{ asset('assets/img/logosm.png') }}" class="logo-sm hidden-lg hidden-md" alt="MakGroup Logo">--}}
         <i class="fa fa-cubes logo-sm hidden-lg hidden-md"></i>
     </a>

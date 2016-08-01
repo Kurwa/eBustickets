@@ -51,8 +51,8 @@
                         <td>{{ $user->last_name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->username }}</td>
-                        <td>{{ $user->first_name }}</td>
-                        <td>{{ $user->first_name }}</td>
+                        <td>{{ $user->roles[0]->role->name }}</td>
+                        <td>{{ $user->company->name }}</td>
                         <td>{{ $user->last_login }}</td>
                         <td>{{ $user->status }}</td>
                         <td>
@@ -106,6 +106,20 @@
                             </div>
                         </div>
                         <!-- End .form-group  -->
+                        <div class="form-group">
+                            <label class="col-lg-3 col-md-4 control-label" for="">Phone Number</label>
+                            <div class="col-lg-9 col-md-8">
+                                <input type="text" class="form-control" name="phone_number" placeholder="Phone Number">
+                            </div>
+                        </div>
+                        @if(\Cartalyst\Sentinel\Laravel\Facades\Sentinel::inRole('admin'))
+                            <div class="form-group">
+                                <label class="col-lg-3 col-md-4 control-label" for="">Location</label>
+                                <div class="col-lg-9 col-md-8">
+                                    <input type="text" class="form-control" required name="location" placeholder="Location">
+                                </div>
+                            </div>
+                        @endif
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">

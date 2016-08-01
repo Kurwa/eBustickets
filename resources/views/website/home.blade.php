@@ -59,10 +59,9 @@
                 <div class="wrapper-padding-a">
                     <div class="mp-popular popular-destinations">
                         <header class="fly-in" style="margin-top: -40px;">
-                            <b>Our Popular Destinations</b>
-                            {{--<p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.</p>--}}
-                        </header>
+                            <b>Our Popular Destinations </b>
 
+                        </header>
                         <div class="fly-in mp-popular-row" style="margin-top: -35px">
                             <!-- // -->
                             <div class="offer-slider-i">
@@ -204,6 +203,7 @@
                                 </div>
                             </div>
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>

@@ -141,7 +141,11 @@ class RouteController extends Controller
     {
         $bus = DB::table('buses')->whereCompaniesId(Sentinel::getUser()->companies_id)->lists('bus_number','id');
         $rout = Route::whereCompaniesId(Sentinel::getUser()->companies_id)->get();
-        $routes = Routesbuses::with(['routes','buses'])->get();
+        $routes = Routesbuses::with(['routes','buses'])
+            ->whereHas('routes', function ($query) {
+                $query->whereCompaniesId(Sentinel::getUser()->companies_id);
+            })->orderBy('created_at', 'DESC')
+            ->get();
         return view('routes.routes-buses',compact('routes','bus','rout'));
     }
 

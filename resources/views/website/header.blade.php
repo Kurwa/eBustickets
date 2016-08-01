@@ -13,6 +13,7 @@
     <script type="text/javascript" src=" {{  asset('assets/js/jquery-1.9.1.min.js') }}"></script>
 
     <script type="text/javascript" src=" {{  asset('assets/js/jquery-ui-1.9.2.min.js') }}"></script>
+    <script type="text/javascript" src=" {{  asset('assets/js/jscolor.min.js') }}"></script>
 
     <link href="{{ asset('assets/datepicker/jquery.datetimepicker.css')}}" rel="stylesheet" media="screen">
     <script type="text/javascript" src="{{ asset('assets/datepicker/jquery.datetimepicker.full.min.js')}}" charset="UTF-8"></script>

@@ -52,11 +52,14 @@
             });
         }
         $(document).ready(function(){
-            $('#vehicleradio').change(function(){
-                $( "#vehicletyres" ).show();
+            $('#paid').change(function(){
+                $( "#ticketsgiven" ).show();
+            });
+            $('#unpaid').change(function(){
+                $( "#ticketsgiven" ).hide();
             });
             $(".date").datepicker({
-                 minDate: 1,
+                 minDate: 0,
                 //sets minDate to dt1 date + 1
                 dateFormat: "yy-mm-dd",
             });
@@ -89,6 +92,7 @@
             });
         }
         function BusesCheck(){
+            $("#seatno").val("");
             $("#data1").val($('#busesid').val());
         }
         function RouteCheck(){
@@ -227,20 +231,20 @@
                         <div class="form-group">
                             <label class="col-lg-3 col-md-4 control-label" for="">Last Name</label>
                             <div class="col-lg-9 col-md-8">
-                                <input type="text" class="form-control" name="last_name" value="" placeholder="Last Name">
+                                <input type="text" class="form-control" name="last_name" value="" placeholder="Last Name" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-lg-3 col-md-4 control-label" for="">Phone Number</label>
                             <div class="col-lg-9 col-md-8">
-                                <input type="text" class="form-control" name="phone_number" value="" placeholder="Phone Number">
+                                <input type="text" class="form-control" name="phone_number" value="" placeholder="Phone Number" required>
                             </div>
                         </div>
                         <!-- End .form-group  -->
                         <div class="form-group">
                             <label class="col-lg-3 col-md-4 control-label" for="">Route</label>
                             <div class="col-lg-9 col-md-8">
-                              <select class="form-control"  required="required" name="routes" id="routes" onchange="RouteCheck()">
+                              <select class="form-control"  required name="routes" id="routes" onchange="RouteCheck()">
                                   <option>--Select Route--</option>
                                   @foreach($routes as $route)
                                       <option value="{{ $route->id }}">{{ $route->initial }} - {{ $route->destination }}</option>
@@ -252,7 +256,7 @@
                         <div class="form-group">
                             <label class="col-lg-3 col-md-4 control-label" for="">Location</label>
                             <div class="col-lg-9 col-md-8">
-                            <select class="form-control initial_destination" id="location" name="location" required="required" onchange="SelectLocation()">
+                            <select class="form-control initial_destination" id="location" name="location" required onchange="SelectLocation()">
                                 <option>--Select Location--</option>
                             </select>
                         </div>
@@ -260,12 +264,19 @@
                         <div class="form-group">
                             <label class="col-lg-3 col-md-4 control-label" for="">Destination</label>
                             <div class="col-lg-9 col-md-8">
-                            <select class="form-control initial_destination"  required="required" id="destination" name="destination">
+                            <select class="form-control initial_destination"  required id="destination" name="destination">
                                 <option>--Select Destination--</option>
                             </select>
                         </div>
                         </div>
                         <!-- End .form-group  -->
+                        <div class="form-group" id="ticketsgiven" style="display: none">
+                            <label class="col-lg-3 col-md-4 control-label" for="">Ticket Number</label>
+                            <div class="col-lg-9 col-md-8">
+                                <input type="text" class="form-control" name="ticketnumber" value="TC_{{ sprintf("%06d",$num+1)}}" placeholder="Tickets Number" readonly required>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="col-md-6">
                         <!-- End .form-group  -->
@@ -305,6 +316,19 @@
                             <label class="col-lg-3 col-md-4 control-label" for="">Payment Amount</label>
                             <div class="col-lg-9 col-md-8">
                                 <input type="text" class="form-control cost" value="" required="required" name="amount" placeholder="Payment Amount">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-4 col-md-4 control-label">Payments Status</label>
+                            <div class="col-lg-8 col-md-8">
+                                <div class="radio-custom radio-inline">
+                                    <input name="radio1" value="1" id="paid" type="radio" required>
+                                    <label for="radio4">Paid</label>
+                                </div>
+                                <div class="radio-custom radio-inline">
+                                    <input name="radio1" value="0" checked id="unpaid" type="radio" required>
+                                    <label for="radio5">Unpaid</label>
+                                </div>
                             </div>
                         </div>
 

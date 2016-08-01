@@ -43,7 +43,6 @@ input,select,button,textarea {outline:none;}
 
 .wrapper-padding {position:relative;}
 .main-cont {width:100%; min-width:300px; /*min-height:100%;*/ }
-.header-a {height:40px; width:100%; background: #636E83;}
 .header-b {position:relative;}
 .header-phone {float:left; padding:11px 16px 0px 16px;height:29px;border-left:1px solid #333333;border-right:1px solid #333333;}
 .header-phone span {background:url(../assets/img/icon-phone.png) left top no-repeat; background-position:left 1px; padding:1px 0px 0px 25px;font-size:11px;color:#fff;font-family: 'Montserrat', sans-serif; font-weight:700;display:inline-block;min-height:15px;}

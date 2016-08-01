@@ -36,6 +36,7 @@ class WebsiteController extends Controller
         $company = Companies::whereSlug($bus)->first();
         view()->share('company',$company);
         view()->share('slug',$bus);
+        view()->share('data','#4A434A');
         if($route_id != ""  && $date != "" && $destiny != ""  && $location != "" ){
             $id = Companies::whereSlug($bus)->first()->id;
             $buses = Routesbuses::with(['routes','buses'])->whereRoutesId($route_id)->whereStatus(1)->get();
@@ -46,8 +47,7 @@ class WebsiteController extends Controller
                             ->whereRoutesId($route_id)
                             ->whereBusesId($bus->id)->get()->count();
                             $bus->remain = $bus->buses->noofseats - $bus->taken;
-                }
-
+                        }
             $route = Route::whereId($route_id)->first();
             $routs = Routespoint::whereRoutesId($route_id)->get();
             $pays = DB::table('payments')->lists('name','id');
@@ -79,7 +79,6 @@ class WebsiteController extends Controller
                 $dest_money = $money - $dest_value;
 
             }
-
             return view('website.schedule',compact('date','route','pays','routs','route_id','buses','id','initial','destination','dest_money'));
         }else{
             $id = Companies::whereSlug($bus)->first()->id;

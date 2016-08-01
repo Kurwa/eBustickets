@@ -58,13 +58,13 @@
                             <ul class="sub">
                                 <li><a href="{{ url('tickets') }}"><span class="txt">Tickets</span></a></li>
                                 <li><a href="{{ url('tickets/bookings') }}"><span class="txt">Booking List</span></a></li>
-                                <li><a href="{{ url('tickets/templates') }}"><span class="txt">Ticket Template</span></a></li>
+{{--                                <li><a href="{{ url('tickets/templates') }}"><span class="txt">Ticket Template</span></a></li>--}}
 
                             </ul>
                         </li>
                         @endif
-                        <li class="disabled">
-                            <a href="#"><i class="fa  fa-group"></i> <span class="txt">Passengers</span></a>
+                        <li class="">
+                            <a href="{{ url('passengers') }}"><i class="fa fa-male"></i> <span class="txt">Passengers</span></a>
                             {{--<ul class="sub">--}}
                             {{--<li><a href="email-inbox.html"><span class="txt">Inbox</span></a>--}}
                             {{--</li>--}}
@@ -76,7 +76,7 @@
                         </li>
                         @if(\Cartalyst\Sentinel\Laravel\Facades\Sentinel::inRole('super'))
                          <li class="">
-                            <a href="{{ url('customers-lists') }}"><i class="fa  fa-group"></i> <span class="txt">Customers</span></a>
+                            <a href="{{ url('customers-lists') }}"><i class="fa  fa-user"></i> <span class="txt">Customers</span></a>
                             {{--<ul class="sub">--}}
                                 {{--<li><a href="email-inbox.html"><span class="txt">Inbox</span></a>--}}
                                 {{--</li>--}}
@@ -88,8 +88,8 @@
                         </li>
                         @endif
                         @if(\Cartalyst\Sentinel\Laravel\Facades\Sentinel::inRole('super') || \Cartalyst\Sentinel\Laravel\Facades\Sentinel::inRole('admin'))
-                            <li class="disabled">
-                                <a href="#"><i class="fa  fa-group"></i> <span class="txt">Agents</span></a>
+                            <li class="">
+                                <a href="{{ url('agents') }}"><i class="fa  fa-group"></i> <span class="txt">Agents</span></a>
                                 {{--<ul class="sub">--}}
                                     {{--<li><a href="email-inbox.html"><span class="txt">Inbox</span></a>--}}
                                     {{--</li>--}}

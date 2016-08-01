@@ -10,6 +10,15 @@
                 return value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             });
           });
+
+            $('#pays').change(function(){
+                if($('#pays').find('option:selected').text() == 'MOBILE'){
+                    $( "#mpesa" ).show();
+                    $( "#pesa" ).show();
+                }
+                $( "#mpesa" ).hide();
+                $( "#pesa" ).hide();
+            });
         });
         function Buses(argument){
             $("#buse_id").val(argument);
@@ -174,10 +183,33 @@
                         </div>
                     </div>
                 </div>
+                    <div class="col-xs-6 col-md-6" style="display: none" id="mpesa">
+                        <ul>
+                            <li><strong>Step 1:</strong> Dial <strong>*150*00#</strong> on your mobile phone.</li>
+                            <li><strong>Step 2:</strong> Select option <strong>4</strong> to Pay by M-PESA.</li>
+                            <li><strong>Step 3:</strong> Select option <strong>1</strong> to Enter the Business Number.</li>
+                            <li><strong>Step 4:</strong> The Business number is <strong>5401923</strong></li>
+                            <!-- <li><strong><span style="color:#ed2324;">Step 5:</span></strong> Enter your <span style="color:#ed2324;"><strong>ACCOUNT ID</strong></span> as the reference number</li> -->
+                            <li><strong>Step 5:</strong> Enter the amount of money in Tanzanian Shillings.</li>
+                            <li><strong>Step 6:</strong> Enter your unique M-PESA pin code and remember not to share this with anyone.</li>
+                            <li><strong>Step 7:</strong> Select option <strong>1</strong> to confirm the transaction and wait for the Message.</li>
+                            <li><strong>Step 8:</strong> Write the Reference Number from your message in the Reference Number Text Field <i class="fa fa-hand-o-right"></i> </li>
+
+                        </ul>
+                    </div>
+                <div class="col-md-6" style="display: none" id="pesa">
+                    <div class="form-group">
+                        <label class="col-lg-3 col-md-4 control-label" for="">Reference Number</label>
+                        <div class="col-lg-9 col-md-8">
+                            <input type="text" class="form-control"
+                                   value="" id="seatno" required name="seatno" placeholder="Reference Number">
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-default">Save</button>
+                <button type="submit" class="btn btn-default">Savedfdf</button>
             </div>
             {!! Form::close() !!}
         </div>

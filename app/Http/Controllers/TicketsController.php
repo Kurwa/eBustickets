@@ -27,10 +27,56 @@ class TicketsController extends Controller
      */
     public function index()
     {
-        $tickets = Booking::with(['init','ends','route','buses','user'])
-                        ->whereCompaniesId(Sentinel::getUser()->companies_id)
-                        ->get();
-        return view('tickets.index',compact('tickets'));
+        $ticket = Input::get('ticket');
+        $bus = Input::get('buses');
+        $date = Input::get('date');
+        $agent = Input::get('agent');
+        if(!is_null($ticket) && $bus == "" && $date == "" && $agent == ""){
+            $tickets = Ticket::with('booking','booking.buses')
+                ->whereCompaniesId(Sentinel::getUser()->companies_id)
+                ->whereTicketsNumber($ticket)
+                ->get();
+        }elseif(!is_null($bus) && $ticket == "" && $date == "" && $agent ==""){
+            $tickets = Ticket::with('booking', 'booking.buses')
+                ->whereCompaniesId(Sentinel::getUser()->companies_id)
+                ->whereHas('booking', function ($query) {
+                    $bus = Input::get('buses');
+                            $query->where('buses_id',$bus);
+                })->orderBy('created_at', 'DESC')
+                ->get();
+        }elseif(!is_null($date) && $ticket == "" && $bus == "" && $agent ==""){
+            $tickets = Ticket::with('booking', 'booking.buses')
+                ->whereCompaniesId(Sentinel::getUser()->companies_id)
+                ->whereHas('booking', function ($query) {
+                    $date = Input::get('date');
+                            $query->where('dateoftravel', $date);
+                })->orderBy('created_at', 'DESC')
+                ->get();
+
+        }elseif(!is_null($bus) && $ticket == "" && $date != "" && $agent ==""){
+            $tickets = Ticket::with('booking', 'booking.buses')
+                ->whereCompaniesId(Sentinel::getUser()->companies_id)
+                ->whereHas('booking', function ($query) {
+                    $bus = Input::get('buses');
+                    $date = Input::get('date');
+                    $query->where('buses_id',$bus)->where('dateoftravel', $date);
+                })->orderBy('created_at', 'DESC')
+                ->get();
+
+//        }elseif($bus=="" && $ticket == "" && $date == "" && $agent ==""){
+//            $tickets = Ticket::with('booking','booking.buses')
+//                ->whereCompaniesId(Sentinel::getUser()->companies_id)
+//                ->get();
+          }else{
+            $tickets = Ticket::with('booking','booking.buses')
+                ->whereCompaniesId(Sentinel::getUser()->companies_id)
+                ->get();
+
+        }
+        $buses = DB::table('buses')
+            ->whereCompaniesId(Sentinel::getUser()->companies_id)
+            ->lists('bus_number', 'id');
+        return view('tickets.index',compact('tickets','buses'));
     }
 
     /**
@@ -151,7 +197,16 @@ class TicketsController extends Controller
                 // ->where('dateoftravel','=',date('Y-m-d'))
                 ->get();
         }
-        return view('tickets.booking',compact('routes','buses','bookings','pays'));
+        try {
+            $ticket = DB::table('tickets')
+                        ->orderBy('id', 'desc')
+                        ->whereCompaniesId(Sentinel::getUser()->companies_id)
+                        ->first()->tickets_number;
+            $num = str_replace("TC_","",$ticket);
+        } catch (\ErrorException $e) {
+            $num =  0 ;
+        }
+        return view('tickets.booking',compact('routes','buses','bookings','pays','num'));
     }
 
 
@@ -160,6 +215,8 @@ class TicketsController extends Controller
      * */
     public function booking_post()
     {
+        $comp = Input::get('company');
+        $company = isset($comp) ? $comp : Sentinel::getUser()->companies_id;
         $input = [
             'firstname' => Input::get('first_name'),
             'lastname' => Input::get('last_name'),
@@ -173,7 +230,7 @@ class TicketsController extends Controller
             'amount' => str_replace(",","",Input::get('amount')),
             'dateoftravel' => Input::get('travelday'),
             'insert_by' => 1,
-            'companies_id' => Input::get('company'),
+            'companies_id' => $company,
         ];
         $rules = [
             'routes_id' => 'required',
@@ -189,7 +246,16 @@ class TicketsController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }else{
-            Booking::FirstOrCreate($input);
+            $val = Booking::FirstOrCreate($input);
+            $radio = Input::get('radio1');
+            $in = [
+                'tickets_number' => Input::get('ticketnumber'),
+                'bookings_id' =>  $val->id,
+                'companies_id' => Sentinel::getUser()->companies_id
+            ];
+            if($radio == 1){
+                Ticket::FirstOrCreate($in);
+            }
             Session::flash('success','Successful Added');
             return Redirect::to('tickets/bookings');
         }
@@ -273,5 +339,21 @@ class TicketsController extends Controller
         $right = range($seat->firstletter, $seat->lastletter);
         $output = view('website.seating-plan',compact('seat','right','seating'));
         return $output;
+    }
+
+
+
+    /**
+     *  PASSANGERS LISTS AND PRINTINGS
+     */
+    public function passengers()
+    {
+        $passengers = Ticket::with('booking','booking.buses')
+            ->whereCompaniesId(Sentinel::getUser()->companies_id)
+            ->get();
+        $buses = DB::table('buses')
+            ->whereCompaniesId(Sentinel::getUser()->companies_id)
+            ->lists('bus_number', 'id');
+        return view('tickets.passanger',compact('buses','passengers'));
     }
 }

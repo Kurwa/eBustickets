@@ -23,7 +23,7 @@
                     <!-- Start .panel -->
             <div class="panel-heading">
                 <h4 class="panel-title text-center">
-                    <img id="logo" src="{{ asset('assets/img/elog0o.png') }}" width="300" height="108" alt="eBus Ticketing">
+                    <img id="logo" src="{{ asset('assets/img/logo1.png') }}" width="300" height="108" alt="eBus Ticketing">
                 </h4>
             </div>
             <div class="panel-body">

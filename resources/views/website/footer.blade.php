@@ -1,4 +1,13 @@
 <!-- /.modal -->
+<style type="text/css">
+    .footer-b {
+        --main-bgcolor: {{ $data }};
+    }
+    .footer-b {
+        height:40px; width:100%;
+        background-color: var(--main-bgcolor);
+    }
+</style>
 <footer class="footer-a">
     <div class="wrapper-padding">
         <div class="section">
@@ -9,20 +18,8 @@
             <div class="footer-skype">Skype: angelotours</div>
         </div>
         <div class="section">
-            <div class="footer-lbl">Featured deals</div>
-            <div class="footer-tours">
-                <!-- // -->
-                <div class="footer-tour">
-                    <div class="footer-tour-l"><a href="#"><img alt="" src="img/f-tour-01.jpg" /></a></div>
-                    <div class="footer-tour-r">
-                        <div class="footer-tour-a">amsterdam tour</div>
-                        <div class="footer-tour-b">location: netherlands</div>
-                        <div class="footer-tour-c">800$</div>
-                    </div>
-                    <div class="clear"></div>
-                </div>
-                <!-- \\ -->
-            </div>
+            <div class="footer-lbl">Top Routes</div>
+            <div class="" style="font-family: DejaVu Sans, 'trebuchet ms', verdana, sans-serif;color: white">Address: 58911 Lepzig Hore,<br />85000 Vienna, Austria</div>
         </div>
         <div class="section">
             <div class="footer-lbl">Twitter widget</div>
@@ -32,12 +29,15 @@
         </div>
         <div class="section">
             <div class="footer-lbl">newsletter sign up</div>
-            <div class="footer-subscribe">
-                <div class="footer-subscribe-a">
-                    <input type="text" placeholder="you email" value="" />
+            <form>
+            <div class="footer">
+                <div class="">
+                    <input type="text" class="form-control" placeholder="you email" value="" />
                 </div>
             </div>
-            <button class="footer-subscribe-btn">Sign up</button>
+            <div class="clear"></div>
+            <button class="btn btn-info" type="submit">Sign up</button>
+            </form>
         </div>
     </div>
     <div class="clear"></div>
